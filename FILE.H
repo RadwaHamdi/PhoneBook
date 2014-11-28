@@ -3,7 +3,7 @@
 #include"LINKED.h"
 
 void write_file(char fileName []);
-struct phonebook * read_file(char fileName []) ;
+void read_file(char fileName []) ;
 
 //write in a file function this function receives file mame as input param
 //and it writes my linked list of phonebook records in it
@@ -27,7 +27,7 @@ void write_file(char fileName [])
    fclose(fp);
 }
 
-struct phonebook * read_file(char fileName [])
+void read_file(char fileName [])
 {
 	struct phonebook * tempstruct;
 	FILE *fp;
@@ -59,5 +59,5 @@ struct phonebook * read_file(char fileName [])
 	}
 
 	 fclose(fp);
-	return head;
+  //	return head;
 }

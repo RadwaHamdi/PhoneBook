@@ -15,6 +15,7 @@ int main (void)
 	getche();
 	getch();
 	return 0;
+
 }
 
 
@@ -31,6 +32,7 @@ int main (void)
    int action;
    struct phonebook* temp;
    char var[50];
+   read_file("RA.TXT");
    do
    {
 		clrscr();
