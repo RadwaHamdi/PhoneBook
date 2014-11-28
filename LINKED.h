@@ -119,11 +119,21 @@ void delete_node(char * key)
 void display_all(void)
 {
 	struct phonebook *temp=head;
-	int counter=1;
+	int counter=5;
 	while(temp)
 	{
+		gotoxy(3,counter);
+		textattr(0x0F);
+		cprintf("%s",temp->name);
 
-		printf("\nthe %d th employee has name=%s phone=%s address=%s",counter,temp->name,temp->phone,temp->address);
+		gotoxy(29,counter);
+		textattr(0x0f);
+		cprintf("%s",temp->phone);
+
+		gotoxy(55,counter);
+		textattr(0x0f);
+		cprintf("%s",temp->address);
+
 		temp=temp->next;
 		counter++;
 	}

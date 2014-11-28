@@ -18,12 +18,9 @@
 
 void submenu_file(int x, int y,int x2,int y2);
 void submenu_view(int x, int y,int x2,int y2);
-
 void submenu_search(int x, int y,int x2,int y2);
 
-
 void submenu(int x, int y,int x2,int y2);
-
 void keyboard ();
 
 void submenu_search(int x, int y,int x2,int y2)
@@ -127,13 +124,13 @@ void submenu_search(int x, int y,int x2,int y2)
 						//yshoof el file
 						puttext(1,1,80,25,buffer);
 						submenu_file(8,20,3,6);
-						}
+						}    /*
 						else if(pos2 >2)
 						{
 							pos2=0;
 							puttext(1,1,80,25,buffer);
 							submenu_file(8,20,3,6);
-						}
+						}  */
 						else
 						{
 							puttext(1,1,80,25,buffer);
@@ -385,13 +382,13 @@ void submenu_file(int x, int y,int x2,int y2)
 						//yshoof el file
 						puttext(1,1,80,25,buffer);
 						submenu_file(8,20,3,6);
-						}
+						}/*
 						else if(pos2 <0)
 						{
 							pos2=2;
 							puttext(1,1,80,25,buffer);
 							submenu_search(8,20,3,16);
-						}
+						}*/
 
 						else if(pos ==2)
 						{

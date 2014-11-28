@@ -126,6 +126,58 @@ gotoxy(80,25); printf("%c",188);
 	gotoxy(1,1);
 	add_menus();
 }
+
+void print_columns(void)
+{
+	gotoxy(7,3);
+	textattr(0x30);
+	cprintf("Contact Name");
+
+	gotoxy(33,3);
+	textattr(0x30);
+	cprintf("Contact Telephone");
+
+	gotoxy(59,3);
+	textattr(0x30);
+	cprintf("Contact Address");
+}
+
+void draw_content(void)
+{
+	int i;
+	for(i=3;i<=23;i++)
+	{
+		textattr(0x0F);
+		gotoxy(27,i	);
+		cprintf("%c",186);
+	}
+	for(i=3;i<=23;i++)
+	{
+		textattr(0x0F);
+		gotoxy(53,i	);
+		cprintf("%c",186);
+	}
+
+	for(i=2;i<=79;i++)
+	{
+		textattr(0x0F);
+		gotoxy(i,4);
+		cprintf("%c",205);
+	}
+
+	gotoxy(27,2); cprintf("%c",203);
+	gotoxy(53,2); cprintf("%c",203);
+	gotoxy(27,24); cprintf("%c",202);
+	gotoxy(53,24); cprintf("%c",202);
+
+	gotoxy(27,4); cprintf("%c",206);
+	gotoxy(53,4); cprintf("%c",206);
+
+	gotoxy(1,4);  cprintf("%c",204);
+	gotoxy(80,4); cprintf("%c",185);
+
+	print_columns();
+}
 /*
 void main(void)
 {

@@ -9,10 +9,12 @@ int main (void)
 	clrscr();
 	background_color(0x00);
 	draw_border_shortcut(1,25);
+	draw_content();
 	detectmouse();
 	showmousetext();
 	write_file("radwa.txt");
-	read_file("radwa.txt");
+	read_file	("RA.TXT");
+	display_all();
 	keyboard();
 	getche();
 	getch();
