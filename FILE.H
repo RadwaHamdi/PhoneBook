@@ -4,6 +4,8 @@
 
 void write_file(char fileName []);
 void read_file(char fileName []) ;
+int delete_file(char fileName []);  //returns 0 when file is successfully deleted otherwise when error happens
+FILE * open_file(char filename[]);
 
 //write in a file function this function receives file mame as input param
 //and it writes my linked list of phonebook records in it
@@ -20,13 +22,16 @@ void write_file(char fileName [])
    {
 	 fflush(fp);
    //	fwrite(tempstruct, sizeof(struct phonebook ), 3, fp);
-	   fprintf(fp,"%s,%s,%s  \n",tempstruct->name,tempstruct->phone,tempstruct->address);
+	   fprintf(fp,"%s,%s,%s",tempstruct->name,tempstruct->phone,tempstruct->address);
+	   
+       if(tempstruct->next !=NULL)
+	  fprintf(fp,"\n");
    //   fprintf(fp, "\n  Testing...\n");
 	  tempstruct = tempstruct->next;
    }
    fclose(fp);
 }
-
+//reads file in the linked list
 void read_file(char fileName [])
 {
 	struct phonebook * tempstruct;
@@ -59,5 +64,22 @@ void read_file(char fileName [])
 	}
 
 	 fclose(fp);
-  //	return head;
+	//return head;
+}
+//input file name and removes it
+int delete_file(char fileName [])
+{
+	int ret;
+	ret = remove(fileName);
+	return ret;
+}
+//send name of file to be created
+
+FILE * open_file(char filename[])
+{
+	FILE * fp;
+	strcat(filename,".txt");
+	fp = fopen(filename,"w");
+	fclose(fp);
+	return fp;
 }
