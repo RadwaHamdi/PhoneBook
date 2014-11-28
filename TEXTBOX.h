@@ -2,7 +2,7 @@
 # include<conio.h>
 # include <stdio.h>
 # include <conio.h>
-# include <string.h>
+
 # include <dos.h>
 
 /* ..ASCII and Scan Codes of Keys.. */

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <conio.h>
-#include<string.h>
+
 
 #define enter 13
 #define up 72
