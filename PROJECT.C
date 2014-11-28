@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <conio.h>
 
+#define NORMAL 0x07
+
 struct phonebook {
 
 	char name [80];
@@ -24,16 +26,10 @@ void write_file(char fileName []);
 
 void background_color(int color)
 {
-	int i,j;
-	for(i=1;i<=25;i++)
-	{
-		for(j=1;j<=80;j++)
-		{
-			gotoxy(j,i);
-			textattr(color);
-			cprintf(" ");
-		}
-	}
+
+	textattr(color);
+	clrscr();
+	textattr(NORMAL);
 }
 
 void add_shortcut(void)
