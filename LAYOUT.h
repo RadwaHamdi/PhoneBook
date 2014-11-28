@@ -3,6 +3,8 @@
 #include <dos.h>
 #include <graphics.h>
 
+#define NORMAL 0x07
+
 union REGS in, out;
 
 void detectmouse ()
