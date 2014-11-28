@@ -41,9 +41,9 @@ struct phonebook * read_file(char fileName [])
 	tempstruct = head;
 
    while(!feof(fp))
-    {
-	tempstruct=create_phonebook();
-	append_phonebook(tempstruct);
+	{
+	tempstruct=create_node();
+	insert_node(tempstruct);
 	fscanf(fp,"%s",tempstr);
 	token = strtok(tempstr,",");
 	//	printf("%s \n",token);
@@ -56,9 +56,8 @@ struct phonebook * read_file(char fileName [])
 		strcpy(tempstruct->address,token);
 
 
-    }
+	}
 
-     fclose(fp);
-    return head;
-
+	 fclose(fp);
+	return head;
 }
