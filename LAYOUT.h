@@ -77,41 +77,43 @@ void draw_border_shortcut(int x , int y)
 		for(j=2;j<=80;j++)
 		{
 			gotoxy(j,i);
+			textattr(0x0F);
 			//if(i==2 && j==2) printf("%c",201);
-			if(i==3 && j==80) printf("%c",187);
+			if(i==3 && j==80) cprintf("%c",187);
 			//else if(i==25 && j==2) printf("%c",200);
-			else if(i==25 && j==80) printf("%c",188);
-			else if(j==80 && i!=2) printf("%c",186);
-			else if(i==3 || i==25) printf("%c",205);
+			else if(i==25 && j==80) cprintf("%c",188);
+			else if(j==80 && i!=2) cprintf("%c",186);
+			else if(i==3 || i==25) cprintf("%c",205);
 		}
 	}
 /*
 gotoxy(80,25); printf("%c",188);
 */
 // gotoxy(1,1); printf("%c",201);
-	gotoxy(1,2); printf("%c",201);
-	gotoxy(1,3); printf("%c",186);
-	gotoxy(1,4); printf("%c",186);
-	gotoxy(1,5); printf("%c",186);
-	gotoxy(1,6); printf("%c",186);
-	gotoxy(1,7); printf("%c",186);
-	gotoxy(1,8); printf("%c",186);
-	gotoxy(1,9); printf("%c",186);
-	gotoxy(1,10); printf("%c",186);
-	gotoxy(1,11); printf("%c",186);
-	gotoxy(1,12); printf("%c",186);
-	gotoxy(1,13); printf("%c",186);
-	gotoxy(1,14); printf("%c",186);
-	gotoxy(1,15); printf("%c",186);
-	gotoxy(1,16); printf("%c",186);
-	gotoxy(1,17); printf("%c",186);
-	gotoxy(1,18); printf("%c",186);
-	gotoxy(1,19); printf("%c",186);
-	gotoxy(1,20); printf("%c",186);
-	gotoxy(1,21); printf("%c",186);
-	gotoxy(1,22); printf("%c",186);
-	gotoxy(1,23); printf("%c",186);
-	gotoxy(1,24); printf("%c",200);
+	textattr(0x0F);
+	gotoxy(1,2); cprintf("%c",201);
+	gotoxy(1,3); cprintf("%c",186);
+	gotoxy(1,4); cprintf("%c",186);
+	gotoxy(1,5); cprintf("%c",186);
+	gotoxy(1,6); cprintf("%c",186);
+	gotoxy(1,7); cprintf("%c",186);
+	gotoxy(1,8); cprintf("%c",186);
+	gotoxy(1,9); cprintf("%c",186);
+	gotoxy(1,10); cprintf("%c",186);
+	gotoxy(1,11); cprintf("%c",186);
+	gotoxy(1,12); cprintf("%c",186);
+	gotoxy(1,13); cprintf("%c",186);
+	gotoxy(1,14); cprintf("%c",186);
+	gotoxy(1,15); cprintf("%c",186);
+	gotoxy(1,16); cprintf("%c",186);
+	gotoxy(1,17); cprintf("%c",186);
+	gotoxy(1,18); cprintf("%c",186);
+	gotoxy(1,19); cprintf("%c",186);
+	gotoxy(1,20); cprintf("%c",186);
+	gotoxy(1,21); cprintf("%c",186);
+	gotoxy(1,22); cprintf("%c",186);
+	gotoxy(1,23); cprintf("%c",186);
+	gotoxy(1,24); cprintf("%c",200);
 	// gotoxy(1,25); printf("%c",200);
 	gotoxy(x,y);
 	add_shortcut();
