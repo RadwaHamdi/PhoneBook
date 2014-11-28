@@ -1,35 +1,12 @@
 #include <stdio.h>
 #include <conio.h>
 #include "LAYOUT.h"
-
+#include "LINKED.h"
 
 #define NORMAL 0x07
 
-struct phonebook {
-
-	char name [80];
-	char phone[20];
-	char address[30];
-	struct phonebook * next ;
-	struct phonebook * prev;
-};
-
-
-struct phonebook * head=NULL;
-struct phonebook * tail=NULL;
-
-//linked list functions
-struct phonebook * create_phonebook (void);
-void append_phonebook (struct phonebook * ele);
-struct phonebook *  search_phonebook (char * name);
-void delete_phonebook (char * key) ;
-void deletelist(void);
-void printlist_search (void) ;
-
 //file functions
 void write_file(char fileName []);
-
-
 
 int main (void)
 {
@@ -41,112 +18,84 @@ int main (void)
 	getche();
 	getch();
 	return 0;
-}
-
-
-struct phonebook * create_phonebook (void)
-
-{
-
-		return ((struct phonebook *) malloc (sizeof(struct phonebook)));
-
-}
-
-void append_phonebook (struct phonebook * ele)
-{
-	if(head == NULL)
-	{
-		head=tail=ele;
-		ele -> prev =NULL;
-		ele -> next =NULL;
-
-	}
-	else
-	{
-		tail -> next=ele;
-		ele -> prev=tail;
-		tail=ele;
-		ele ->next= NULL;
-
-	}
-
-}
-struct phonebook * search_phonebook (char * name)
-{
-	struct phonebook * temp=head;
-
-	while (temp!=NULL && strcmp(temp -> name,name) )
-	{
-		 temp=temp -> next;
-	}
-
-	   return temp;
-}
-
-void deletelist(void)
-{
-	struct phonebook * temp;
-	while(head != NULL)
+	//Code to test Linked List
+	/*
+	char choice;
+   int action;
+   struct phonebook* temp;
+   char var[50];
+   do
+   {
+		clrscr();
+		do
 		{
-			temp=head;
-			head=head -> next;
-			free(temp);
-		}
+			printf("choose an action\n1 for add an employee at the last\n2 for search an employee by id\n3 for delete an employee\n4 for delete the whole list\n5 for display all\n6 for sorting the data based on the name:  ");
+			flushall();
+			scanf("%d",&action);
+		}while(action!=1 && action!=2 && action!=3 && action!=4 && action!=5 && action!=6);
 
-	   tail=NULL;
+		switch(action)
+		{
+			case 1:
+				temp=create_node();
+
+				do
+				{
+					printf("\nenter the name: ");
+					flushall();
+					gets(var);
+					strcpy(temp->name,var);
+					if(search_node(var)!=NULL)
+					{
+						printf("this name exist!!");
+					}
+				}while(search_node(var)!=NULL);
+
+				printf("enter the phone: ");
+				flushall();
+				gets(var);
+				strcpy(temp->phone,var);
+
+				printf("enter the address: ");
+				flushall();
+				gets(var);
+				strcpy(temp->address,var);
+
+				insert_node(temp);
+
+				break;
+			case 2:
+				printf("Please enter the id you want to search for: ");
+				flushall();
+				gets(var);
+				temp=search_node(var);
+				if(temp!=NULL)
+					printf("The employee is found with data \nname=%s\nphone=%s\naddress=%s",temp->name,temp->phone,temp->address);
+				else
+					printf("No employee with this id");
+				break;
+			case 3:
+				printf("Please enter the id you want to delete: ");
+				flushall();
+				scanf("%d",&var);
+				delete_node(var);
+				break;
+			case 4:
+				delete_list();
+				break;
+			case 5:
+				display_all();
+				break;
+			case 6:
+				sort(1);
+				break;
+		}
+		printf("\nenter 'x' to exit or any other char to make another action");
+		choice=getch();
+   }while(choice!='x');
+   */
 }
-void delete_phonebook (char * key)
-{
-			struct phonebook * temp;
-	temp=search_phonebook (key);
 
-	if(temp != NULL)
-	{
-		if(temp == head && head ==tail)
-		{
-			head=tail=NULL;
-			free(temp);
-		}
-
-		if(head == temp && head != tail)
-		{
-			head=head -> next;
-			head -> prev =NULL;
-			free(temp);
-		}
-
-		if(tail == temp && head != tail)
-		{
-			   tail = tail -> prev;
-			   tail -> next =NULL;
-			   free(temp);
-
-		}
-
-		else
-		{
-			temp -> prev -> next =temp -> next;
-			temp -> next -> prev =temp -> prev;
-			free(temp);
-
-
-		}
-	}
-}
-
-void printlist_search (void)
-{
-	struct phonebook * ptr = head;
-
-	printf("\n the list is : \n");
-	while(ptr != NULL)
-	{
-		 printf("\n %S \n",ptr->name);
-		 ptr=ptr->next;
-
-	}
-
-}
 
 //write in a file function this function receives file mame as input param
 //and it writes my linked list of phonebook records in it
