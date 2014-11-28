@@ -1,7 +1,9 @@
 #include<stdio.h>
 #include<conio.h>
+#include"LINKED.h"
 
 void write_file(char fileName []);
+struct phonebook * read_file(char fileName []) ;
 
 //write in a file function this function receives file mame as input param
 //and it writes my linked list of phonebook records in it
@@ -23,4 +25,40 @@ void write_file(char fileName [])
 	  tempstruct = tempstruct->next;
    }
    fclose(fp);
+}
+
+struct phonebook * read_file(char fileName [])
+{
+	struct phonebook * tempstruct;
+	FILE *fp;
+	int i;
+	int c;
+	char * token;
+	char tempstr [150];
+	head = NULL;
+
+	fp = fopen(fileName,"r+");
+	tempstruct = head;
+
+   while(!feof(fp))
+    {
+	tempstruct=create_phonebook();
+	append_phonebook(tempstruct);
+	fscanf(fp,"%s",tempstr);
+	token = strtok(tempstr,",");
+	//	printf("%s \n",token);
+		strcpy(tempstruct->name,token);
+		token = strtok(NULL,",");
+//		printf("%s \n",token);
+		strcpy(tempstruct->phone,token);
+		token = strtok(NULL,",");
+	//	printf("%s \n",token);
+		strcpy(tempstruct->address,token);
+
+
+    }
+
+     fclose(fp);
+    return head;
+
 }

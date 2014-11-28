@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <conio.h>
 #include "LAYOUT.h"
-#include "LINKED.h"
 #include "FILE.h"
 
 int main (void)
@@ -11,6 +10,8 @@ int main (void)
 	draw_border_shortcut(1,25);
 	detectmouse();
 	showmousetext();
+	write_file("radwa.txt");
+	read_file("radwa.txt");
 	getche();
 	getch();
 	return 0;
