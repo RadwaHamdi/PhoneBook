@@ -20,7 +20,7 @@
 #define tab 9
 #define enter 13
 
-void rectborder(int,int,int,int);
+void rectborder(int,int,int,int,char *);
 void hline(int,int,int);
 void vline(int,int,int);
 union REGS in_regs, out_regs;
@@ -322,7 +322,7 @@ void messageboxnew(int x1,int y1,int x2,int y2)
 	textbackground(WHITE);
 	fillrect(x1,y1,x2+1,y2+1);
 	textcolor(BLACK);
-	rectborder(x1+1,y1+1,x2-1,y2-1);
+	rectborder(x1+1,y1+1,x2-1,y2-1,"Contact");
 	textbackground(BLUE);
 	fillrect(x1+2,y1+2,x2-1,y2-1);
 
@@ -352,7 +352,7 @@ void messageboxsearch(int x1,int y1,int x2,int y2,char * name,char *tele ,char *
 	textbackground(WHITE);
 	fillrect(x1,y1,x2+1,y2+1);
 	textcolor(BLACK);
-	rectborder(x1+1,y1+1,x2-1,y2-1);
+	rectborder(x1+1,y1+1,x2-1,y2-1,"Contact");
 	textbackground(BLUE);
 	fillrect(x1+2,y1+2,x2-1,y2-1);
 
@@ -382,7 +382,7 @@ void messageboxedit(int x1,int y1,int x2,int y2,char * name,char *tele ,char *ad
 	textbackground(WHITE);
 	fillrect(x1,y1,x2+1,y2+1);
 	textcolor(BLACK);
-	rectborder(x1+1,y1+1,x2-1,y2-1);
+	rectborder(x1+1,y1+1,x2-1,y2-1,"Contact");
 	textbackground(BLUE);
 	fillrect(x1+2,y1+2,x2-1,y2-1);
 
@@ -401,6 +401,29 @@ void messageboxedit(int x1,int y1,int x2,int y2,char * name,char *tele ,char *ad
 	cprintf("%s  %s   %s",name,tele,address);
 	gotoxy(x1+4,y2-1);
 }
+void notfoundsearch(int field)
+{
+	int x1=6, y1=8, x2=40, y2=15;
+	char fields[3][10]={"name","phone","address"};
+	textbackground(BLACK);
+       //	fillrect(0,0,80,30);
+	 //big white box
+	textbackground(WHITE);
+	fillrect(x1,y1,x2+1,y2+1);
+	textcolor(BLACK);
+	rectborder(x1+1,y1+1,x2-1,y2-1,"Not Found");
+
+	gotoxy(x1+3,y1+3);
+	cprintf("Can not found this %s ",fields[field]);
+
+	//button(x1+3,y2-1,"DELETE");
+	button(x1+12,y2-1,"OK");
+	//button(x1+21,y2-1,"Cancel");
+	gotoxy(x1+2,y1+2);
+	textbackground(GREEN);
+
+	gotoxy(x1+4,y2-1);
+}
 void messagedelete()
 {
 	int x1=6, y1=8, x2=40, y2=15;
@@ -410,7 +433,7 @@ void messagedelete()
 	textbackground(WHITE);
 	fillrect(x1,y1,x2+1,y2+1);
 	textcolor(BLACK);
-	rectborder(x1+1,y1+1,x2-1,y2-1);
+	rectborder(x1+1,y1+1,x2-1,y2-1,"Warning");
 
 	gotoxy(x1+3,y1+3);
 	cprintf("Are you sure you want to");
@@ -422,6 +445,30 @@ void messagedelete()
 	button(x1+21,y2-1,"Cancel");
 	gotoxy(x1+2,y1+2);
 	textbackground(GREEN);
+
+	gotoxy(x1+4,y2-1);
+}
+void savebeforeclose()
+{
+	int x1=6, y1=8, x2=40, y2=15;
+	textbackground(BLACK);
+       //	fillrect(0,0,80,30);
+	 //big white box
+	textbackground(WHITE);
+	fillrect(x1,y1,x2+1,y2+1);
+	textcolor(BLACK);
+	rectborder(x1+1,y1+1,x2-1,y2-1,"Warning");
+
+	gotoxy(x1+3,y1+3);
+	cprintf("Do you want to save changes");
+	gotoxy(x1+4,y1+4);
+	cprintf("before closing this program?");
+
+	button(x1+3,y2-1,"YES");
+	button(x1+12,y2-1,"NO");
+	button(x1+21,y2-1,"Cancel");
+	gotoxy(x1+2,y1+2);
+
 
 	gotoxy(x1+4,y2-1);
 }
@@ -440,18 +487,20 @@ char * viewsearchbox(int index)
 	 //big white box
 	textbackground(WHITE);
 	fillrect(x1,y1,x2+1,y2+1);
+
 	textcolor(BLACK);
+	rectborder(x1+1,y1+1,x2-1,y2-1,"Search");
 	gotoxy(x1+3,y1+3);
 	cprintf(" %s ",keys[index]);
 	button(x1+12,y2-1,"Search");
 
-	gotoxy(x1+11,y1+3);
+	gotoxy(x1+14,y1+3);
 	textbackground(BLUE);
 	key=txtbox(15);
 
 	//button(x1+21,y2-1,"NEXT");
 	gotoxy(x1+2,y1+2);
-	
+
 	//// when press enter the box dissappear and data return to its state
 	flushall();
 	key2=getch();
@@ -494,6 +543,7 @@ char * viewsearchbox(int index)
 					   contact[2]=txtbox(5);
 					   break;
 					case ENTER:
+
 						terminate=1;
 						break;
 				}
@@ -538,7 +588,27 @@ void viewsearchresult(char * name,char *phone ,char *addr,int action)
 }
 void showeditbox(char * name,char *tele ,char *address)
 {
+	char ch;
 	messageboxedit(5,7,40,15, name,tele ,address);
+	gotoxy(7,11);
+			txtbox(14);
+			ch=getch();
+		    switch(ch)
+		    {
+				case tab:
+				gotoxy(7+14,11);
+				txtbox(11);
+				ch=getch();
+				switch(ch)
+				{
+					case tab:
+					gotoxy(7+14+12,11);
+					txtbox(5);
+					break;
+				}
+				break;
+			}	  
+
 }
 /*--------------------------------------------------   ..Written just to demonstrate textbox function..   ..Really shitting..----------------------------------------------------*/
 /*int main()
@@ -580,7 +650,7 @@ void showeditbox(char * name,char *tele ,char *address)
   return 0;
 }*/
 
-void rectborder(int x1,int y1,int x2, int y2)
+void rectborder(int x1,int y1,int x2, int y2,char * message)
 {
   /*printing corners*/
   gotoxy(x2,y1);
@@ -596,7 +666,7 @@ void rectborder(int x1,int y1,int x2, int y2)
 	hline(x1+1,x1+2,y1);
 	cprintf("[x]");
 	hline(x1+6,x1+10,y1);
-	cprintf("contact");
+	cprintf(message);
 	hline(x1+18,x2-1,y1);
   //hline(x1+1,x2-1,y1);
   hline(x1+1,x2-1,y2+1);
