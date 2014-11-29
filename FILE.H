@@ -48,7 +48,7 @@ void read_file(char fileName [])
    while(!feof(fp))
 	{
 	tempstruct=create_node();
-	insert_node(tempstruct);
+
 	fscanf(fp,"%s",tempstr);
 	token =strtok(tempstr,",");
 	//	printf("%s \n",token);
@@ -59,7 +59,7 @@ void read_file(char fileName [])
 		token = strtok(NULL,",");
 	//	printf("%s \n",token);
 		strcpy(tempstruct->address,token);
-
+		insert_node(tempstruct);
 
 	}
 

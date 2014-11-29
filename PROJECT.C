@@ -4,56 +4,32 @@
 #include "submenu.h"
 #include "TEXTBOX.h"
 
-void clear_content(void)
-{
-	int i,j;
-	for(j=2;j<=79;j++)
-	{
-		if(j==27 || j==53)
-			continue;
-		for(i=5;i<=23;i++)
-		{
-			gotoxy(j,i); cprintf(" "); gotoxy(j,i); cprintf(" "); gotoxy(j,i); cprintf(" ");
-		}
-	}
-}
-
-void search_multiple_results(char *key,int typeOfSearch)
-{
-	struct phonebook *temp;
-	int i;
-
-		temp=search(key,typeOfSearch);
-
-	clear_content();
-
-	for(i=0;i<lengthOfArray;i++)
-	{
-	gotoxy(3,5+i); cprintf("%s",temp[i].name); gotoxy(29,5+i); cprintf("%s",temp[i].phone); gotoxy(55,5+i);   cprintf("%s",temp[i].address);
-	}
-}
-
 int main (void)
 {
+	char name[80],phone[20],address[30];
 	clrscr();
 	background_color(0x00);
 	draw_border_shortcut(1,25);
 	draw_content();
 	detectmouse();
 	showmousetext();
-	write_file("radwa.txt");
+	//write_file("radwa.txt");
 	read_file	("RA.TXT");
 	display_all();
 	getch();
 	search_multiple_results("cairo",3);
 	getch();
 	display_all();
+   //	gets(name);
+   //	gets(phone);
+   //	gets(address);
+   //	create_add_node(name,phone,address);
+   //	write_file("RA.TXT");
 	keyboard();
-	getch();
 	getch();
 	return 0;
 
-			/*
+			  /*
   int x1,y1,x2,y2;
   int edit=0;
   char ch;
@@ -89,7 +65,7 @@ int main (void)
    }
   }
   getch();
-  return 0;   */
+  return 0; */
 }
 
 

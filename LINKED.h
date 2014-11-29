@@ -138,6 +138,18 @@ struct phonebook* search(char *key,int choice)
 	return found;
 }
 
+void create_add_node(char* temp_name,char* temp_phone,char* temp_address)
+{
+	struct phonebook* new_node;
+	new_node=create_node();
+
+	strcpy(new_node->name,temp_name);
+	strcpy(new_node->phone,temp_phone);
+	strcpy(new_node->address,temp_address);
+
+	insert_node(new_node);
+}
+
 struct phonebook* create_node(void)
 {
 	return((struct phonebook *)malloc(sizeof(struct phonebook)));
@@ -341,8 +353,9 @@ void swap_elements(struct phonebook* elem1,struct phonebook* elem2)
 }
 
 
-//1 for sorting by phone
-//2 for sorting by address
+//1 for sorting by name
+//2 for sorting by phone
+//3 for sorting by address
 void sort(int choice)
 {
 	struct phonebook* i;
@@ -354,7 +367,7 @@ void sort(int choice)
 		{
 			for(j=i->next;j!=NULL;j=j->next)
 			{
-				if(strcmp(i->phone,j->phone) >0 )
+				if(strcmp(i->name,j->name) >0 )
 				{
 					swap_elements(i,j);
 				}
@@ -367,23 +380,23 @@ void sort(int choice)
 		{
 			for(j=i->next;j!=NULL;j=j->next)
 			{
-				if(strcmp(i->address,j->address) >0 )
+				if(strcmp(i->phone,j->phone) >0 )
 				{
 					swap_elements(i,j);
 				}
 			}
 		}
 	}
-
-	display_all();
-
-	for(i=head;i!=tail;i=i->next)
+	else if(choice ==3)
 	{
-		for(j=i->next;j!=NULL;j=j->next)
+		for(i=head;i!=tail;i=i->next)
 		{
-			if(strcmp(i->name,j->name) >0 )
+			for(j=i->next;j!=NULL;j=j->next)
 			{
-				swap_elements(i,j);
+				if(strcmp(i->address,j->address) >0 )
+				{
+					swap_elements(i,j);
+				}
 			}
 		}
 	}
