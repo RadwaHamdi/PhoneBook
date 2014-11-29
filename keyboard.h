@@ -14,7 +14,7 @@
 #define esc 27
 #define f2  60
 #define insert 82
-#define delete  83
+#define del  83
 
 
  void keyboard (void)
