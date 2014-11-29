@@ -14,8 +14,8 @@ int main (void)
 	detectmouse();
 	showmousetext();
 	//write_file("radwa.txt");
-	read_file	("RA.TXT");
-	display_all();
+	//read_file	("RA.TXT");
+	//display_all();
 	getch();
 	search_multiple_results("cairo",3);
 	getch();

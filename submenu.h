@@ -464,17 +464,25 @@ void menu(int x, int y,int x2,int y2,int pos2)
 					   puttext(1,1,80,25,subbuffer);
 					  // terminate=1;
 					break;
-
+					
+					
 					case 1:
-
+						read_file("RA.TXT");
+						display_all();
+						//gettext(1,1,80,25,sub2buffer);
+						//puttext(1,1,80,25,buffer);
+						//terminate=1;
+						//puttext(1,1,80,25,sub2buffer);
 					break;
 
 					case 2:
-
+						write_file("RA.TXT");
+						puttext(1,1,80,25,buffer);
+						terminate=1;
 					break;
 
 					case 3:
-
+						exit();
 					break;
 
 				}
