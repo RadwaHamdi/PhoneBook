@@ -14,17 +14,95 @@ struct phonebook
 struct phonebook* head=NULL;
 struct phonebook* tail=NULL;
 
-
+int lengthOfArray;
 
 struct phonebook* create_node(void);
 void append_node(struct phonebook*);
 struct phonebook* search_node(char*);
+struct phonebook* search(char *,int);//1 for name 2 for phone 3 for address
 void delete_list(void);
 void delete_node(char*);
 void display_all(void);
 int insert_node(struct phonebook*);
 void swap_elements(struct phonebook*,struct phonebook*);
 void sort(int);//1 for phone 2 for address
+
+struct phonebook* search(char *key,int choice)
+{
+	struct phonebook * found;
+	struct phonebook * temp;
+	int index=0;
+
+	lengthOfArray=0;
+	if(choice==1)
+	{
+		for(temp=head;temp!=NULL;temp=temp->next)
+		{
+			if(strcmp(temp->name,key)==0)
+						lengthOfArray++;
+		}
+	}
+	else if(choice==2)
+	{
+		for(temp=head;temp!=NULL;temp=temp->next)
+		{
+			if(strcmp(temp->phone,key)==0)
+						lengthOfArray++;
+		}
+	}
+	else if(choice==3)
+	{
+		for(temp=head;temp!=NULL;temp=temp->next)
+		{
+			if(strcmp(temp->address,key)==0)
+						lengthOfArray++;
+		}
+	}
+
+
+	found =(struct phonebook*)malloc(lengthOfArray*sizeof(struct phonebook));
+
+	if(choice==1)
+	{
+		for(temp=head;temp!=NULL;temp=temp->next)
+		{
+			if(strcmp(temp->name,key)==0)
+			{
+				strcpy(found[index].name,temp->name);
+				strcpy(found[index].phone,temp->phone);
+				strcpy(found[index].address,temp->address);
+				index++;
+			}
+		}
+	}
+	else if(choice==2)
+	{
+		for(temp=head;temp!=NULL;temp=temp->next)
+		{
+			if(strcmp(temp->phone,key)==0)
+			{
+				strcpy(found[index].name,temp->name);
+				strcpy(found[index].phone,temp->phone);
+				strcpy(found[index].address,temp->address);
+			index++;
+			}
+		}
+	}
+	else if(choice==3)
+	{
+		for(temp=head;temp!=NULL;temp=temp->next)
+		{
+			if(strcmp(temp->address,key)==0)
+			{
+				strcpy(found[index].name,temp->name);
+				strcpy(found[index].phone,temp->phone);
+				strcpy(found[index].address,temp->address);
+			index++;
+			}
+		}
+	}
+	return found;
+}
 
 struct phonebook* create_node(void)
 {

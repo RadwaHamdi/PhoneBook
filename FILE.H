@@ -50,7 +50,7 @@ void read_file(char fileName [])
 	tempstruct=create_node();
 	insert_node(tempstruct);
 	fscanf(fp,"%s",tempstr);
-	token = strtok(tempstr,",");
+	token =strtok(tempstr,",");
 	//	printf("%s \n",token);
 		strcpy(tempstruct->name,token);
 		token = strtok(NULL,",");

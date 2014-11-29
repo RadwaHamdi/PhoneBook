@@ -2,7 +2,36 @@
 #include <conio.h>
 #include "LAYOUT.h"
 #include "submenu.h"
-#include "FILE.h"
+#include "TEXTBOX.h"
+
+void clear_content(void)
+{
+	int i,j;
+	for(j=2;j<=79;j++)
+	{
+		if(j==27 || j==53)
+			continue;
+		for(i=5;i<=23;i++)
+		{
+			gotoxy(j,i); cprintf(" "); gotoxy(j,i); cprintf(" "); gotoxy(j,i); cprintf(" ");
+		}
+	}
+}
+
+void search_multiple_results(char *key,int typeOfSearch)
+{
+	struct phonebook *temp;
+	int i;
+
+		temp=search(key,typeOfSearch);
+
+	clear_content();
+
+	for(i=0;i<lengthOfArray;i++)
+	{
+	gotoxy(3,5+i); cprintf("%s",temp[i].name); gotoxy(29,5+i); cprintf("%s",temp[i].phone); gotoxy(55,5+i);   cprintf("%s",temp[i].address);
+	}
+}
 
 int main (void)
 {
@@ -15,10 +44,52 @@ int main (void)
 	write_file("radwa.txt");
 	read_file	("RA.TXT");
 	display_all();
+	getch();
+	search_multiple_results("cairo",3);
+	getch();
+	display_all();
 	keyboard();
-	getche();
+	getch();
 	getch();
 	return 0;
+
+			/*
+  int x1,y1,x2,y2;
+  int edit=0;
+  char ch;
+  clrscr();
+
+
+  messagebox(23,9,58,17);
+  detectmouse ();
+  showmousetext ();
+  getch();
+
+  edit=1;
+  if(edit)
+  {
+	gotoxy(25,13);
+	txtbox(14);
+	ch=getch();
+   switch(ch)
+   {
+	case tab:
+	gotoxy(25+14,13);
+	txtbox(11);
+	ch=getch();
+	switch(ch)
+	{
+			case tab:
+		gotoxy(25+14+12,13);
+		txtbox(5);
+		break;
+	}
+	break;
+
+   }
+  }
+  getch();
+  return 0;   */
 }
 
 

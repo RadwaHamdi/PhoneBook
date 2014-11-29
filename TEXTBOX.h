@@ -20,37 +20,39 @@
 void rectborder(int,int,int,int);
 void hline(int,int,int);
 void vline(int,int,int);
-union REGS in, out;
-void detectmouse ()
+union REGS in_regs, out_regs;
+
+void detectmouse (void)
 {
 
-	in.x.ax = 0;
-	int86 (0X33,&in,&out);
-	if (out.x.ax == 0)
-	printf ("\n Mouse Fail To Initialize");
+	in_regs.x.ax = 0;
+	int86 (0X33,&in_regs,&out_regs);
+  //	if (out_regs.x.ax == 0)
+ //	printf ("\n Mouse Fail To Initialize");
   //	else
-    //	printf ("\n Mouse Succesfully Initialize");
+	//	printf ("\n Mouse Succesfully Initialize");
 }
 
-void showmousetext ()
+void showmousetext (void)
 {
 
-	in.x.ax = 1;
-	int86 (0X33,&in,&out);
+	in_regs.x.ax = 1;
+	int86 (0X33,&in_regs,&out_regs);
 }
 
-int mouse_press(){
+int mouse_press(void){
 	in_regs.x.ax = 3;
 	int86(0x33,&in_regs,&out_regs);
 	return(out_regs.x.bx);
 		}
-
-int mouse_pos( int left, int right, int top,int bottom ) {
+					  /*
+int mouse_pos(int left, int right, int top,int bottom )
+{
 	in_regs.x.ax = 3;
 	int86(0x33,&in_regs,&out_regs);
 	return((out_regs.x.cx>left && out_regs.x.cx<right) &&
-	       (out_regs.x.dx>top  && out_regs.x.dx<bottom));
-		}
+		   (out_regs.x.dx>top  && out_regs.x.dx<bottom));
+}                       */
 
 /*-------------------------------------   ..Checks the status of Insert Key..   ..Returns..   ..1 if ON..   ..0 if OFF..--------------------------------------*/
 int ins_state ( void )
@@ -62,18 +64,18 @@ int ins_state ( void )
   status = *stat ;
 
   if ( ( status & 128 ) == 128 )
-     return 1;
+	 return 1;
   else return 0;
 }
 
 /*----------------------------------    ..Changes the shape of cursor..------------------------------------*/
 void cursor_shape ( int y , int x )
 {
-    union REGS i, o ;
-    i.h.ah = 1 ;
-    i.h.ch = y ;
-    i.h.cl = x ;
-    int86 ( 16, &i, &o ) ;
+	union REGS i, o ;
+	i.h.ah = 1 ;
+	i.h.ch = y ;
+	i.h.cl = x ;
+	int86 ( 16, &i, &o ) ;
 }
 
 /*-----------------------------------------------    ..Restores the screen to the orginal state..-------------------------------------------------*/
@@ -86,7 +88,7 @@ void restore_ui(void)
   clrscr();
 
   for (i=1;i<4000;i+=2)
-      *(vidmem+i)=7;
+	  *(vidmem+i)=7;
 
   _setcursortype(_NORMALCURSOR);
 }
@@ -110,18 +112,18 @@ void txtbox ( int length )
    char str[80];  /*              ..Array into which characters are being stored,               the length of the string is limited to 80..             ..Just change the length to meet your needs..             ..You can even use dynamic memory allocation, if you               are poor in memory..          */char key;
 
    int startx,    /* ..For storing the starting position.. */
-       x,
-       y,
-       i,
-       j,
-       currentpos,
-       lastpos = 0,
-       len;      /* ..Length of the string.. */
+	   x,
+	   y,
+	   i,
+	   j,
+	   currentpos,
+	   lastpos = 0,
+	   len;      /* ..Length of the string.. */
 
    startx = wherex();
    y = wherey();
 
-/*--------------------------------------------------------------------      ..I have used the colors which I like, you are free to use your      own colors..----------------------------------------------------------------------*/
+/*I have used the colors which I like, you are free to use your      own colors..----------------------------------------------------------------------*/
 
    textcolor ( WHITE );
    textbackground ( BLUE );
@@ -134,38 +136,38 @@ void txtbox ( int length )
 
    while ( 1 )
    {
-      if (  ins_state() == 1 ) /* ..If the Insert is ON change the cursor.. */
-      cursor_shape ( 4 , 8 );
-      else
-      _setcursortype( _NORMALCURSOR );
+	  if (  ins_state() == 1 ) /* ..If the Insert is ON change the cursor.. */
+	  cursor_shape ( 4 , 8 );
+	  else
+	  _setcursortype( _NORMALCURSOR );
 
-      key = getch();
-      x = wherex();
-      len = strlen ( str );
+	  key = getch();
+	  x = wherex();
+	  len = strlen ( str );
 
-      if ( key == ENTER )
-     break;
+	  if ( key == ENTER )
+	 break;
 
-      if ( key == ESC ) /* ..For clearing the characters in the textbox.. */
-      {
-     textbackground ( BLUE );
-     horiz_draw ( startx , startx + length , y , ' ');
-     gotoxy ( startx , y );
-     str[0] = '\0';
-     lastpos = 0;
-     continue;
-      }
+	  if ( key == ESC ) /* ..For clearing the characters in the textbox.. */
+	  {
+	 textbackground ( BLUE );
+	 horiz_draw ( startx , startx + length , y , ' ');
+	 gotoxy ( startx , y );
+	 str[0] = '\0';
+	 lastpos = 0;
+	 continue;
+	  }
 
-      /* ..For storing the typed characters into the array.. */if ( key > 31 && key < 127 && x < ( startx + length ) )
-      {
-     if ( len == length && ins_state() == 1 )
-     {
-         printf ( "\a" );
-         continue;
-     }
+	  /* ..For storing the typed characters into the array.. */if ( key > 31 && key < 127 && x < ( startx + length ) )
+	  {
+	 if ( len == length && ins_state() == 1 )
+	 {
+		 printf ( "\a" );
+		 continue;
+	 }
 
-     if (  ins_state() == 1 )  /* ..Insert.. */
-     {
+	 if (  ins_state() == 1 )  /* ..Insert.. */
+	 {
 	currentpos = x - startx;
 	str[len + 1] = '\0';
 
@@ -182,73 +184,73 @@ void txtbox ( int length )
 	   putch ( str[i] );
 
 	gotoxy ( x , y );
-     }
-     else
-     {
-       i = x - startx;
-       putch ( key );
+	 }
+	 else
+	 {
+	   i = x - startx;
+	   putch ( key );
 
-       str[i] = key;
+	   str[i] = key;
 
-       if ( i >= lastpos )
-       {
+	   if ( i >= lastpos )
+	   {
 	  lastpos = i;
 	  str[++i] = '\0';
-       }
-     }
-      }
+	   }
+	 }
+	  }
 
-      if ( key == 8 && x <= startx + len && x != startx ) /* ..Backspace.. */
-      {
-     x = wherex();
-     currentpos = x - startx;
+	  if ( key == 8 && x <= startx + len && x != startx ) /* ..Backspace.. */
+	  {
+	 x = wherex();
+	 currentpos = x - startx;
 
-     for ( i = currentpos - 1 ; str[i] != '\0' ; i++ )
+	 for ( i = currentpos - 1 ; str[i] != '\0' ; i++ )
 	 str[i] = str[i + 1];
 
-     gotoxy ( startx , y );
-     horiz_draw ( startx , startx + len , y , ' ');
-     gotoxy ( startx , y );
+	 gotoxy ( startx , y );
+	 horiz_draw ( startx , startx + len , y , ' ');
+	 gotoxy ( startx , y );
 
-     for ( i = 0 ; i < len ; i++ )
+	 for ( i = 0 ; i < len ; i++ )
 	 putch ( str[i] );
 
-     gotoxy ( --x , y );
-     continue;
-      }
-
-      if ( key == 0 )   /* ..If the keys are Scan Keys.. */
-      {
-     key = getch();
-
-     if ( key == END )
-     {
-	 gotoxy ( startx + len , y );
-	 continue;
-     }
-
-     if ( key == HOME )
-     {
-	 gotoxy ( startx , y );
-	 continue;
-     }
-
-     if ( key == LEFT && x > startx )
-     {
 	 gotoxy ( --x , y );
 	 continue;
-     }
+	  }
 
-     if ( key == RIGHT && x < startx + len )
-     {
+	  if ( key == 0 )   /* ..If the keys are Scan Keys.. */
+	  {
+	 key = getch();
+
+	 if ( key == END )
+	 {
+	 gotoxy ( startx + len , y );
+	 continue;
+	 }
+
+	 if ( key == HOME )
+	 {
+	 gotoxy ( startx , y );
+	 continue;
+	 }
+
+	 if ( key == LEFT && x > startx )
+	 {
+	 gotoxy ( --x , y );
+	 continue;
+	 }
+
+	 if ( key == RIGHT && x < startx + len )
+	 {
 	 gotoxy ( ++x , y );
 	 continue;
-     }
+	 }
 
-     x = wherex();
+	 x = wherex();
 
-     if ( key == DEL &&  x != startx + len )
-     {
+	 if ( key == DEL &&  x != startx + len )
+	 {
 	x = wherex();
 	currentpos = x - startx;
 
@@ -264,8 +266,8 @@ void txtbox ( int length )
 
 	gotoxy ( x , y );
 	continue;
-     }
-      }
+	 }
+	  }
    }  /* ..End of while loop.. */
 
    i = strlen ( str );
@@ -273,11 +275,11 @@ void txtbox ( int length )
    /* ..Truncates the useless spaces found at the end of string.. */
    for ( j = i - 1 ; j >= 0 ; --j )
    {
-      if ( str[j] != ' ' )
-      {
-     str[++j] = '\0';
-     break;
-      }
+	  if ( str[j] != ' ' )
+	  {
+	 str[++j] = '\0';
+	 break;
+	  }
    }
 
 //   printf ("\n\nThe string you entered : %s",str);
@@ -287,7 +289,7 @@ void txtbox ( int length )
 void fillrect(int x1,int y1,int x2,int y2)
 {
 	int m,l,i,j;
-    for(i=y1;i<y2;i++)
+	for(i=y1;i<y2;i++)
 	{
 		gotoxy(x1,i);
 		for(j=x1;j<x2;j++)
@@ -355,9 +357,9 @@ void editmode()
   edit=1;
   if(edit)
   {
-    gotoxy(7,11);
-    txtbox(14);
-    ch=getch();
+	gotoxy(7,11);
+	txtbox(14);
+	ch=getch();
    switch(ch)
    {
 	case tab:
@@ -392,11 +394,11 @@ void rectborder(int x1,int y1,int x2, int y2)
   cprintf("%c",218);
   /* printing lines */
   //upper border
-    hline(x1+1,x1+2,y1);
-    cprintf("[x]");
-    hline(x1+6,x1+10,y1);
-    cprintf("contact");
-    hline(x1+18,x2-1,y1);
+	hline(x1+1,x1+2,y1);
+	cprintf("[x]");
+	hline(x1+6,x1+10,y1);
+	cprintf("contact");
+	hline(x1+18,x2-1,y1);
   //hline(x1+1,x2-1,y1);
   hline(x1+1,x2-1,y2+1);
   vline(y1+1,y2,x1);
@@ -407,8 +409,8 @@ void hline(int x1,int x2,int y)
   int i;
   for(i=x1;i<=x2;i++)
   {
-    gotoxy(i,y);
-    cprintf("%c",196);
+	gotoxy(i,y);
+	cprintf("%c",196);
   }
 }
 void vline(int y1,int y2,int x)
@@ -416,7 +418,8 @@ void vline(int y1,int y2,int x)
   int i;
   for(i=y1;i<=y2;i++)
   {
-    gotoxy(x,i);
-    cprintf("%c",179);
+	gotoxy(x,i);
+	cprintf("%c",179);
   }
 }
+

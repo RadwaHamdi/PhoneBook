@@ -4,7 +4,7 @@
 #include <graphics.h>
 
 #define NORMAL 0x07
-
+   /*
 union REGS in, out;
 
 void detectmouse ()
@@ -17,7 +17,7 @@ void detectmouse ()
 	printf ("\n Mouse Fail To Initialize");
 	else
 	printf ("\n Mouse Succesfully Initialize");
-	*/
+	*//*
 }
 
 void showmousetext ()
@@ -25,7 +25,7 @@ void showmousetext ()
 
 	in.x.ax = 1;
 	int86 (0X33,&in,&out);
-}
+}*/
 void background_color(int color)
 {
 	int i,j;
