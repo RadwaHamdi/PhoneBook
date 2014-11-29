@@ -2,21 +2,17 @@
 #include <conio.h>
 #include "LAYOUT.h"
 #include "keyboard.h"
-#include "TEXTBOX.h"
-#include "addnewtx.h"
+//#include "TEXTBOX.h"
+
 int main (void)
 {
 	char name[80],phone[20],address[30];
-		char **contact;
 	clrscr();
 	background_color(0x00);
 	draw_border_shortcut(1,25);
 	draw_content();
 	detectmouse();
 	showmousetext();
-
-	newContact(contact);
-	printf("name : %s phone: %s address: %s",contact[0],contact[1],contact[2]);
 	//write_file("radwa.txt");
 	read_file("RA.TXT");
 	display_all();

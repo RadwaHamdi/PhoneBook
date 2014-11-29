@@ -2,7 +2,7 @@
 #include <conio.h>
 #include<string.h>
 #include "submenu.h"
-#include "ALLBOX.H"
+//#include "ALLBOX.H"
 
 #define enter 13
 #define up 72
@@ -47,7 +47,7 @@
 				case insert:
 				   //  add new record message box;
 				   newContact(contact);
-					//clrscr();
+						//clrscr();
 					//printf("name : %s phone: %s address: %s",contact[0],contact[1],contact[2]);
 				break;
 
@@ -55,9 +55,9 @@
 					//delete record
 				break;
 
-			 /*	case f2:
-
-				break; */
+			 	case f2:
+                    showeditbox("xxxxx","cccccc","sssssssss");
+				break; 
 
 			   }
 				break;
