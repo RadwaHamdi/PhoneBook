@@ -18,8 +18,8 @@ int main (void)
 	newContact(contact);
 	printf("name : %s phone: %s address: %s",contact[0],contact[1],contact[2]);
 	//write_file("radwa.txt");
-	//read_file	("RA.TXT");
-	//display_all();
+	read_file("RA.TXT");
+	display_all();
 	getch();
 	search_multiple_results("cairo",3);
 	getch();
@@ -30,6 +30,7 @@ int main (void)
    //	create_add_node(name,phone,address);
    //	write_file("RA.TXT");
 	keyboard();
+	getche();
 	getch();
 	return 0;
 

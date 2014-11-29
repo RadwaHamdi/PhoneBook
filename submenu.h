@@ -2,6 +2,8 @@
 #include <conio.h>
 #include<string.h>
 #include "FILE.h"
+//#include "ADDNEWTX.H"
+#include "ALLBOX.H"
 
 #define enter 13
 #define up 72
@@ -65,8 +67,10 @@ void submenu(int x, int y,int x2,int y2,char buffer[])
 	int loap,loap2;
 	int fpos=0,terminate=0;
 	char key,buf[4096];
-	char smenu[4][30]={" Add New Record "," Delete Record "," Save File "," Edit Record "};
+	char **contact;
+	char smenu[2][30]={" Add New Record "," Edit Record "};
 	gettext(1,1,80,25,buf);
+
 	do
 	{
 		for(loap=0;loap<y;loap++)
@@ -79,14 +83,14 @@ void submenu(int x, int y,int x2,int y2,char buffer[])
 			}
 		}
 
-		for(loap=0 ;loap <4 ;loap ++)
+		for(loap=0 ;loap <2 ;loap ++)
 		{
 			if(fpos == loap)
 				textattr(all);
 			gotoxy(y2+1,x2+1+(2*loap));
 			cprintf("%s",smenu[loap]);
 			textattr(light);
-			if(loap !=3)
+			if(loap !=1)
 				{
 					gotoxy(y2+1,x2+2+(2*loap));
 					cprintf("-----------------");
@@ -97,10 +101,10 @@ void submenu(int x, int y,int x2,int y2,char buffer[])
 		if(fpos ==1)
 			gotoxy(y2+2,x2+3);
 
-		else if(fpos ==2)
+		/*else if(fpos ==2)
 			gotoxy(y2+2,x2+5);
 		else if(fpos ==3)
-			gotoxy(y2+2,x2+7);
+			gotoxy(y2+2,x2+7);*/
 		else
 			gotoxy(y2+2,x2+1);
 		key=getch();
@@ -118,12 +122,12 @@ void submenu(int x, int y,int x2,int y2,char buffer[])
 					case up:
 						fpos--;
 						if(fpos <0)
-							fpos=3;
+							fpos=1;
 					break;
 
 					case down:
 						fpos++;
-						if(fpos >3)
+						if(fpos >1)
 							fpos=0;
 					break;
 
@@ -160,21 +164,31 @@ void submenu(int x, int y,int x2,int y2,char buffer[])
 				switch(fpos)
 				{
 					case 0:
-						// y3mel call 3la el fun eli asmha search bya address
+						
+						//clrscr();
+						newContact(contact);
+						//clrscr();
+						//printf("name : %s phone: %s address: %s",contact[0],contact[1],contact[2]);
+						//getch();
+						puttext(1,1,80,25,buffer);
 						terminate=1 ;
 					break;
 					case 1:
 						// y3mel call ll funcation eli asmha search by name
+						
+						
 						terminate=1;
 					break;
-					case 2:
+				/*	case 2:
 						//y3mel call ll search by phone
+						
+						
 						terminate=1;
 					break;
 					case 3:
 					 //
 					 terminate=1;
-					 break;
+					 break; */
 
 				}
 				break;
@@ -195,6 +209,9 @@ void menu(int x, int y,int x2,int y2,int pos2)
 		char key;
 		char buffer [4096],subbuffer [4096];
 		int terminate=0;
+		char * name;
+		char * phone;
+		char * address;
 
 		textattr(back);
 		gettext(1,1,80,25,buffer);
@@ -408,15 +425,21 @@ void menu(int x, int y,int x2,int y2,int pos2)
 				switch(spos)
 				{
 					case 0:
-						// y3mel call 3la el fun eli asmha search bya address
+						// y3mel call 3la el fun eli asmha search bya name
+						name=viewsearchbox(0);
+						//puttext(1,1,80,25,buffer);
 						terminate=1 ;
 					break;
 					case 1:
-						// y3mel call ll funcation eli asmha search by name
+						// y3mel call ll funcation eli asmha search by phone
+						phone=viewsearchbox(1);
+						//puttext(1,1,80,25,buffer);
 						terminate=1;
 					break;
 					case 2:
-						//y3mel call ll search by phone
+						//y3mel call ll search by address
+						address=viewsearchbox(2);
+						//puttext(1,1,80,25,buffer);
 						terminate=1;
 					break;
 
@@ -467,12 +490,15 @@ void menu(int x, int y,int x2,int y2,int pos2)
 					
 					
 					case 1:
+						//clear_content();
+						puttext(1,1,80,25,buffer);
 						read_file("RA.TXT");
 						display_all();
-						//gettext(1,1,80,25,sub2buffer);
+						//gettext(1,1,80,25,buffer);
 						//puttext(1,1,80,25,buffer);
-						//terminate=1;
-						//puttext(1,1,80,25,sub2buffer);
+						//puttext(1,1,80,25,buffer);
+						terminate=1;
+						
 					break;
 
 					case 2:

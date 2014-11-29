@@ -2,6 +2,7 @@
 #include <conio.h>
 #include<string.h>
 #include "submenu.h"
+#include "ALLBOX.H"
 
 #define enter 13
 #define up 72
@@ -20,6 +21,7 @@
  void keyboard (void)
  {
 	char key;
+	char ** contact;
   //	int x1=3,y=5,x2=25,x3=55;
 	flushall();
 	key=getch();
@@ -44,6 +46,9 @@
 
 				case insert:
 				   //  add new record message box;
+				   newContact(contact);
+					//clrscr();
+					//printf("name : %s phone: %s address: %s",contact[0],contact[1],contact[2]);
 				break;
 
 				case del:
