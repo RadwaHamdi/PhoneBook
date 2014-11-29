@@ -68,6 +68,9 @@ void submenu(int x, int y,int x2,int y2,char buffer[])
 	int fpos=0,terminate=0;
 	char key,buf[4096];
 	char **contact;
+	char * name ;
+	char * phone ; 
+	char * address ;
 	char smenu[2][30]={" Add New Record "," Edit Record "};
 	gettext(1,1,80,25,buf);
 
@@ -174,9 +177,10 @@ void submenu(int x, int y,int x2,int y2,char buffer[])
 						terminate=1 ;
 					break;
 					case 1:
-						// y3mel call ll funcation eli asmha search by name
-						
-						
+						// y3mel call ll funcation ll edit record
+						//newContact(contact);
+						showeditbox("xxxxx","cccccc","sssssssss");
+						puttext(1,1,80,25,buffer);
 						terminate=1;
 					break;
 				/*	case 2:
@@ -212,6 +216,7 @@ void menu(int x, int y,int x2,int y2,int pos2)
 		char * name;
 		char * phone;
 		char * address;
+		struct phonebook* temp;
 
 		textattr(back);
 		gettext(1,1,80,25,buffer);
@@ -427,19 +432,39 @@ void menu(int x, int y,int x2,int y2,int pos2)
 					case 0:
 						// y3mel call 3la el fun eli asmha search bya name
 						name=viewsearchbox(0);
+						puttext(1,1,80,25,buffer);
+						temp=search(name,0);
+						viewsearchresult("ssss","ccccc"," dddd ",2);
+						/*for(loap=0;loap<lengthOfArray;loap++)
+						{
+							viewsearchresult(temp[loap].name,temp[loap].phone,temp[loap].address,2);
+						}*/
+						//viewsearchresult(char * name,char *phone ,char *addr,)
 						//puttext(1,1,80,25,buffer);
 						terminate=1 ;
 					break;
 					case 1:
 						// y3mel call ll funcation eli asmha search by phone
 						phone=viewsearchbox(1);
+						//delay(100);
+						puttext(1,1,80,25,buffer);
+						temp=search(phone,1);
+						for(loap=0;loap< lengthOfArray;loap++)
+						{
+							viewsearchresult(temp[loap].name,temp[loap].phone,temp[loap].address,2);
+						}
 						//puttext(1,1,80,25,buffer);
 						terminate=1;
 					break;
 					case 2:
 						//y3mel call ll search by address
 						address=viewsearchbox(2);
-						//puttext(1,1,80,25,buffer);
+						puttext(1,1,80,25,buffer);
+						temp=search(address,2);
+						for(loap=0;loap< lengthOfArray;loap++)
+						{
+							viewsearchresult(temp[loap].name,temp[loap].phone,temp[loap].address,2);
+						}
 						terminate=1;
 					break;
 
@@ -483,7 +508,7 @@ void menu(int x, int y,int x2,int y2,int pos2)
 				{
 					case 0:
 					   gettext(1,1,80,25,subbuffer);
-					   submenu(9,18,5,4,buffer);
+					   submenu(6,18,5,4,buffer);
 					   puttext(1,1,80,25,subbuffer);
 					  // terminate=1;
 					break;
