@@ -283,8 +283,7 @@ char * txtbox ( int length )
    }
 
    return str;
-//   printf ("\n\nThe string you entered : %s",str);
-   getch();
+
 }
 
 void fillrect(int x1,int y1,int x2,int y2)
@@ -342,45 +341,54 @@ void editmode()
 {
 
 }
-/*--------------------------------------------------   ..Written just to demonstrate textbox function..   ..Really shitting..----------------------------------------------------*/
+ void newContact(char ** contact)
+{
+	int terminate=0;
+	int x=7,y=11,i=0;
+	char ch;
+	messagebox(5,7,40,15);
+	detectmouse();
+	showmousetext();
+	  gotoxy(x,y);
+	  contact[0]=txtbox(14);
+	  x+=14;
+
+	   ch=getch();
+		switch(ch)
+		{
+
+			case tab:
+
+				gotoxy(x,y);
+				contact[1]=txtbox(12);
+				ch=getch();
+				 x+=12;
+				 switch(ch)
+				 {
+					case tab:
+					   gotoxy(x,y);
+					   contact[2]=txtbox(5);
+					   break;
+					case ENTER:
+						terminate=1;
+						break;
+				}
+				break;
+		}
+
+
+}
 /*int main()
 {
-  int x1,y1,x2,y2;
-  int edit=0;
-  char ch;
-  clrscr();
+	char **contact;
+	clrscr();
+	newContact(contact);
+	clrscr();
+	printf("name : %s phone: %s address: %s",contact[0],contact[1],contact[2]);
+	getch();
 
-
-  messagebox(5,7,40,15);
-  detectmouse ();
-  showmousetext ();
-  getch();
-  edit=1;
-  if(edit)
-  {
-	gotoxy(7,11);
-	txtbox(14);
-	ch=getch();
-   switch(ch)
-   {
-	case tab:
-	gotoxy(7+14,11);
-	txtbox(11);
-	ch=getch();
-	switch(ch)
-	{
-		case tab:
-		gotoxy(7+14+12,11);
-		txtbox(5);
-		break;
-	}
-	break;
-
-   }
-  }
-  getch();
-  return 0;
-}*/
+return 0;
+} */
 
 void rectborder(int x1,int y1,int x2, int y2)
 {
