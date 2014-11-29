@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <conio.h>
 #include "LAYOUT.h"
-#include "submenu.h"
+#include "keyboard.h"
 #include "TEXTBOX.h"
 
 int main (void)

@@ -23,11 +23,11 @@
 
 void menu(int x, int y,int x2,int y2,int pos2);
 void submenu(int x, int y,int x2,int y2,char buffer[]);
-void keyboard ();
+// void keyboard ();
 
 
 
-void keyboard (){
+/*void keyboard (){
 	char key;
 	key=getch();
 
@@ -57,7 +57,7 @@ void keyboard (){
 
 	}
 
-}
+} */
 
 
 void submenu(int x, int y,int x2,int y2,char buffer[])
