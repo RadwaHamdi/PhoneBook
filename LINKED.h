@@ -16,6 +16,8 @@ struct phonebook* tail=NULL;
 
 int lengthOfArray;
 
+void clear_content(void);
+void search_multiple_results(char*,int);
 struct phonebook* create_node(void);
 void append_node(struct phonebook*);
 struct phonebook* search_node(char*);
@@ -26,6 +28,38 @@ void display_all(void);
 int insert_node(struct phonebook*);
 void swap_elements(struct phonebook*,struct phonebook*);
 void sort(int);//1 for phone 2 for address
+
+void clear_content(void)
+{
+	int i,j;
+	for(j=2;j<=79;j++)
+	{
+		if(j==27 || j==53)
+			continue;
+		for(i=5;i<=23;i++)
+		{
+			textattr(0x00);
+			gotoxy(j,i); cprintf(" "); gotoxy(j,i); cprintf(" "); gotoxy(j,i); cprintf(" ");
+		}
+	}
+}
+
+void search_multiple_results(char *key,int typeOfSearch)
+{
+	struct phonebook *temp;
+	int i;
+
+		temp=search(key,typeOfSearch);
+
+	clear_content();
+
+	for(i=0;i<lengthOfArray;i++)
+	{
+	textattr(0x0F);
+	gotoxy(3,5+i); cprintf("%s",temp[i].name); gotoxy(29,5+i); cprintf("%s",temp[i].phone); gotoxy(55,5+i);   cprintf("%s",temp[i].address);
+	}
+}
+
 
 struct phonebook* search(char *key,int choice)
 {
@@ -198,6 +232,7 @@ void display_all(void)
 {
 	struct phonebook *temp=head;
 	int counter=5;
+	clear_content();
 	while(temp)
 	{
 		gotoxy(3,counter);
