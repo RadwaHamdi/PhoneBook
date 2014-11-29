@@ -467,12 +467,15 @@ void menu(int x, int y,int x2,int y2,int pos2)
 					
 					
 					case 1:
+						//clear_content();
+						puttext(1,1,80,25,buffer);
 						read_file("RA.TXT");
 						display_all();
-						//gettext(1,1,80,25,sub2buffer);
+						//gettext(1,1,80,25,buffer);
 						//puttext(1,1,80,25,buffer);
-						//terminate=1;
-						//puttext(1,1,80,25,sub2buffer);
+						//puttext(1,1,80,25,buffer);
+						terminate=1;
+						
 					break;
 
 					case 2:
