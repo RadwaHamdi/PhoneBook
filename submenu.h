@@ -428,14 +428,27 @@ void menu(int x, int y,int x2,int y2,int pos2)
 				{
 					case 0:
 						// y3mel call 3la el fun eli asmha sort name
+						clear_content();
+						sort(1);
+						display_all();
+						puttext(1,1,80,25,buffer);
 						terminate=1 ;
 					break;
 					case 1:
 						// y3mel call ll funcation eli asmha sort phone
+						clear_content();
+                        sort(2);
+                        display_all();
+						puttext(1,1,80,25,buffer);
 						terminate=1;
 					break;
 					case 2:
 						//y3mel call ll search by sort address
+						clear_content();
+                        sort(3);
+                        display_all();
+						puttext(1,1,80,25,buffer);
+					
 						terminate=1;
 					break;
 
