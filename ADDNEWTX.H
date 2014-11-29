@@ -107,7 +107,7 @@ void horiz_draw(int start_x,int end_x,int y,char symbol)
 }
 
 /*-----------------------------------  ..The important fuction..  ..Just include in your programs..-----------------------------------+------------------------- Available Keys -----------------------------------+|    ~ Right Arrow --> For moving the cursor to the right                 ||    ~ Left  Arrow --> For moving the cursor to the left                  ||    ~ DEL         --> For deleting characters                            ||    ~ Backspace   --> For deleting characters                            ||    ~ Insert      --> For inserting charcters                            ||    ~ Home           --> For going to the beginning of the text             ||    ~ End         --> For going to the end of the text                   ||    ~ ESC           --> For clearing the textbox                 |+----------------------------------------------------------------------------+*/
-void txtbox ( int length )
+char * txtbox ( int length )
 {
    char str[80];  /*              ..Array into which characters are being stored,               the length of the string is limited to 80..             ..Just change the length to meet your needs..             ..You can even use dynamic memory allocation, if you               are poor in memory..          */char key;
 
@@ -282,6 +282,7 @@ void txtbox ( int length )
 	  }
    }
 
+   return str;
 //   printf ("\n\nThe string you entered : %s",str);
    getch();
 }
@@ -309,9 +310,9 @@ void button(int x1,int y1,char * btxt)
 }
 void messagebox(int x1,int y1,int x2,int y2)
 {
-	char name[]="sara hussien";
-	char tele[]="0100223223";
-	char address[]="Tanta";
+	char name[]="";
+	char tele[]="";
+	char address[]="";
 	textbackground(BLACK);
      //	fillrect(0,0,80,30);
 	 //big white box
@@ -324,9 +325,9 @@ void messagebox(int x1,int y1,int x2,int y2)
 
 	//textbackground();
 
-	button(x1+3,y2-1,"DELETE");
-	button(x1+12,y2-1,"EDIT");
-	button(x1+21,y2-1,"NEXT");
+	//button(x1+3,y2-1,"DELETE");
+	button(x1+12,y2-1,"DONE");
+	//button(x1+21,y2-1,"NEXT");
 	gotoxy(x1+2,y1+2);
 	textbackground(GREEN);
 	textcolor(WHITE);
@@ -379,8 +380,8 @@ void editmode()
   }
   getch();
   return 0;
-}
-*/
+}*/
+
 void rectborder(int x1,int y1,int x2, int y2)
 {
   /*printing corners*/
