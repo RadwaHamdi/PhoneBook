@@ -1,5 +1,3 @@
-# include<stdio.h>
-# include<conio.h>
 # include <stdio.h>
 # include <conio.h>
 
@@ -302,21 +300,25 @@ void fillrect(int x1,int y1,int x2,int y2)
 		}
 	}
 }
-void button(int x1,int y1,char * btxt)
+void button(int x1,int y1,char * btxt,int selected)  // 0 not selected 1 selected
 {
 	gotoxy(x1,y1);
+	if(selected==0)
 	textbackground(GREEN);
+	else
+	textbackground(YELLOW);
 	fillrect(x1,y1,x1+8,y1);
 	gotoxy(x1+1,y1);
 	textcolor(BLACK);
 	cprintf("%s",btxt);
 }
-void messageboxnew(int x1,int y1,int x2,int y2)
+int messageboxnew(int x1,int y1,int x2,int y2)
 {
 	char name[]="";
 	char tele[]="";
 	char address[]="";
 	textbackground(BLACK);
+	int index=3;
      //	fillrect(0,0,80,30);
 	 //big white box
 	textbackground(WHITE);
@@ -328,8 +330,65 @@ void messageboxnew(int x1,int y1,int x2,int y2)
 
 	//textbackground();
 
-	//button(x1+3,y2-1,"DELETE");
-	button(x1+12,y2-1,"DONE");
+
+	button(x1+3,y2-1,"DONE",0);
+    button(x1+12,y2-1,"CANCEL",0);
+	ch = getch();
+	while(ch!=ENTER && index !=3)
+	{
+		switch(ch)
+		{
+			case 0:
+				ch = getch();
+				switch(ch)
+				{
+					case LEFT:
+						if(index == 0)
+						{
+						index++;
+						button(x1+3,y2-1,"DONE",0);
+                        button(x1+12,y2-1,"CANCEL",1);
+						}
+						else if(index ==1 ) 
+						{
+						index=1;
+						button(x1+3,y2-1,"DONE",0);
+                        button(x1+12,y2-1,"CANCEL",1);
+						}
+						else
+						{
+						index = 0;
+						button(x1+3,y2-1,"DONE",1);
+                        button(x1+12,y2-1,"CANCEL",0);
+						}
+					break;
+					case RIGHT:
+						if(index == 0)
+						{
+						index=0;
+						button(x1+3,y2-1,"DONE",1);
+                        button(x1+12,y2-1,"CANCEL",0);
+						}
+						else if(index ==1 ) 
+						{
+						index--;
+						button(x1+3,y2-1,"DONE",1);
+                        button(x1+12,y2-1,"CANCEL",0);
+						}
+						else
+						{
+						index = 1;
+						button(x1+3,y2-1,"DONE",0);
+                        button(x1+12,y2-1,"CANCEL",1);
+						}
+						break;
+				}
+			case ENTER
+				if(index !=3)
+				 break;
+		}
+	}
+	   if(index ==1) return 1;
 	//button(x1+21,y2-1,"NEXT");
 	gotoxy(x1+2,y1+2);
 	textbackground(GREEN);
@@ -340,8 +399,9 @@ void messageboxnew(int x1,int y1,int x2,int y2)
 	textbackground(BLUE);
 	cprintf("%s  %s   %s",name,tele,address);
 	gotoxy(x1+4,y2-1);
+	return index;
 }
-void messageboxsearch(int x1,int y1,int x2,int y2,char * name,char *tele ,char *address)
+int messageboxsearch(int x1,int y1,int x2,int y2,char * name,char *tele ,char *address)
 {
 	/*char name[]="sara hussien";
 	char tele[]="0100223223";
@@ -358,9 +418,9 @@ void messageboxsearch(int x1,int y1,int x2,int y2,char * name,char *tele ,char *
 
 	//textbackground();
 
-	button(x1+3,y2-1,"DELETE");
-	button(x1+12,y2-1,"EDIT");
-	button(x1+21,y2-1,"NEXT");
+	button(x1+3,y2-1,"DELETE",1);
+	button(x1+12,y2-1,"EDIT",0);
+	button(x1+21,y2-1,"NEXT",0);
 	gotoxy(x1+2,y1+2);
 	textbackground(GREEN);
 	textcolor(WHITE);
@@ -369,6 +429,7 @@ void messageboxsearch(int x1,int y1,int x2,int y2,char * name,char *tele ,char *
 	textcolor(YELLOW);
 	textbackground(BLUE);
 	cprintf("%s  %s   %s",name,tele,address);
+	ch=getch();
 	gotoxy(x1+4,y2-1);
 }
 void messageboxedit(int x1,int y1,int x2,int y2,char * name,char *tele ,char *address)
