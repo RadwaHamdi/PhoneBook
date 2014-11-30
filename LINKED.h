@@ -1,20 +1,25 @@
 #include<stdio.h>
 #include<conio.h>
 
+//#include "line.h"
+#define NORMALL 0x0f
+#define HIGHLIGHT 0x70
 
 struct phonebook
 {
-	char name[80];
-	char phone[20];
-	char address[30];
-	struct phonebook * prev;
-	struct phonebook * next;
+char name[80];
+char phone[20];
+char address[30];
+int id;
+struct phonebook * prev;
+struct phonebook * next;
 };
 
 struct phonebook* head=NULL;
 struct phonebook* tail=NULL;
 
 int lengthOfArray;
+int i=1;
 
 void clear_content(void);
 void search_multiple_results(char*,int);
@@ -28,6 +33,124 @@ void display_all(void);
 int insert_node(struct phonebook*);
 void swap_elements(struct phonebook*,struct phonebook*);
 void sort(int);//1 for phone 2 for address
+void add_index(void);
+
+
+
+///////////////////////
+/////////////////////
+///////////begin of radwa file
+///////////////////
+//////////////////
+//////////////////
+
+struct phonebook* get_element_by_index(int index)
+{
+	struct phonebook* temp=head;
+	while(temp)
+	{
+		if(temp->id == index)
+			break;
+		temp=temp->next;
+	}
+	return temp;
+}
+
+void highlight_line(int ii)
+{
+	int j;
+	struct phonebook* temp;
+	temp=get_element_by_index(ii);
+
+	for(j=2;j<78;j++)
+	{
+		if(j==27 || j==53)
+			continue;
+		else
+		{
+			gotoxy(j,ii+4);
+			textattr(0x00);
+			cprintf(" ");
+		}
+	}
+
+//	for(j=2;j<70;j++)
+	//{       if(j==27||j==79)
+		//	continue;
+		  // else
+		   //{
+			textattr(HIGHLIGHT);
+			gotoxy(3,ii+4);
+			cprintf("%s",temp->name);
+
+			gotoxy(29,ii+4);
+			textattr(HIGHLIGHT);
+			cprintf("%s",temp->phone);
+
+			gotoxy(55,ii+4);
+			textattr(HIGHLIGHT);
+			cprintf("%s",temp->address);
+			
+	//       }
+//	}
+
+}
+void normal_line(int ii)
+{
+	int j;
+	struct phonebook* temp;
+	temp=get_element_by_index(ii);
+
+	for(j=2;j<78;j++)
+	{
+		if(j==27 || j==53)
+			continue;
+		else
+		{
+			gotoxy(j,ii+4);
+			textattr(0x00);
+			cprintf(" ");
+		}
+	}
+
+//	for(j=2;j<70;j++)
+	//{       if(j==27||j==79)
+		//	continue;
+		  // else
+		   //{
+			textattr(NORMALL);
+			gotoxy(3,ii+4);
+			cprintf("%s",temp->name);
+
+			gotoxy(29,ii+4);
+			textattr(NORMALL);
+			cprintf("%s",temp->phone);
+
+			gotoxy(55,ii+4);
+			textattr(NORMALL);
+			cprintf("%s",temp->address);
+			
+	//       }
+//	}
+
+}
+//////////////////////
+////////////////////
+//////////end of radwa file
+////////////////////
+///////////////////////
+
+void add_index(void)
+{
+int current_id=1;
+struct phonebook* temp=head;
+while(temp)
+{
+temp->id=current_id;
+temp=temp->next;
+current_id++;
+}
+}
 
 void clear_content(void)
 {
@@ -247,8 +370,10 @@ void display_all(void)
 	clear_content();
 	while(temp)
 	{
+
 		gotoxy(3,counter);
 		textattr(0x0F);
+		
 		cprintf("%s",temp->name);
 
 		gotoxy(29,counter);
@@ -262,6 +387,9 @@ void display_all(void)
 		temp=temp->next;
 		counter++;
 	}
+	add_index();
+	highlight_line(i);
+	//cprintf("%s",temp->name);
 }
 
 int insert_node(struct phonebook * node)
@@ -274,6 +402,7 @@ int insert_node(struct phonebook * node)
 				   node->prev=NULL;
 				   head=node;
 				   tail=node;
+				   add_index();
 				   return 1;
 	 }
 	 //only one element exist && insertion is done after it
@@ -283,6 +412,7 @@ int insert_node(struct phonebook * node)
 			   head->next=node;
 			   node->prev=head;
 			   node->next=NULL;
+			   add_index();
 			   return 1;
 	 }
 	 //insert in first location
@@ -292,6 +422,7 @@ int insert_node(struct phonebook * node)
 		  head->prev=node;
 		  head=node;
 		  node->prev=NULL;
+		  add_index();
 		  return 1;
 	 }
 	 else
@@ -305,6 +436,7 @@ int insert_node(struct phonebook * node)
 					  node->prev=tail;
 					  node->next=NULL;
 					  tail=node;
+					  add_index();
 					  return 1;
 			   }
 			   else
@@ -317,6 +449,7 @@ int insert_node(struct phonebook * node)
 		 node->prev=temp->prev;
 		 temp->prev=node;
 		 node->next=temp;
+		 add_index();
 		 return 1;
 	 }
 }

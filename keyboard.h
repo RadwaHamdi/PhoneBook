@@ -2,7 +2,7 @@
 #include <conio.h>
 #include<string.h>
 #include "submenu.h"
-//#include "ALLBOX.H"
+//#include "line.h"
 
 #define enter 13
 #define up 72
@@ -18,11 +18,18 @@
 #define del  83
 
 
+
  void keyboard (void)
  {
 	char key;
 	char ** contact;
+	char * name={" "} ;
+	char * phone ={" "}; 
+	char * address ={" "};
   //	int x1=3,y=5,x2=25,x3=55;
+	
+while(1)
+{
 	flushall();
 	key=getch();
 
@@ -56,8 +63,21 @@
 				break;
 
 			 	case f2:
-                    showeditbox("xxxxx","cccccc","sssssssss");
+                    showeditbox(name,phone,address);
 				break; 
+				
+				case up:
+					normal_line(i);
+					i=i-1;
+					highlight_line(i);
+				break;
+				
+				case down:
+					normal_line(i);
+					i=i+1;
+					highlight_line(i);
+					//clrscr();
+				break;
 
 			   }
 				break;
@@ -66,4 +86,5 @@
 
 
 
+}
  }
