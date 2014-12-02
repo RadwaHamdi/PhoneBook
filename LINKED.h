@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<conio.h>
-
+#include<ctype.h>
 //#include "line.h"
 #define NORMALL 0x0f
 #define HIGHLIGHT 0x70
@@ -43,6 +43,29 @@ void add_index(void);
 ///////////////////
 //////////////////
 //////////////////
+
+int is_phone(char *temp)
+{
+	while(*temp != '\0')
+	{
+		if(!isdigit(*temp))
+			return 0;
+		temp++;
+	}
+	return 1;
+}
+
+int is_spaces(char *temp)
+{
+	while(*temp != '\0')
+	{
+		if(*temp!=' ')
+			return 0;
+		temp++;
+	}
+	return 1;
+}
+
 
 struct phonebook* get_element_by_index(int index)
 {
