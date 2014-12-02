@@ -746,26 +746,169 @@ void viewsearchresult(char * name,char *phone ,char *addr,int action)
 void showeditbox(char * name,char *tele ,char *address)
 {
 	char ch;
+	char ch2;
+	struct phonebook *temp;
+	int flag=0;
+	char *temp_name;
+	char *temp_phone;
+	char *temp_address;
+	int terminate=0;
+	int x;
+	int y;
+	temp=get_element_by_index(i);
 	messageboxedit(5,7,40,15, name,tele ,address);
-	gotoxy(7,11);
-			txtbox(14);
+	do
+	{
+		if(flag==0)
+		{
+			gotoxy(7,11);
+			printf(temp->name);
+			gotoxy(7+11,11);
+			printf(temp->phone);
+			gotoxy(7+11+12,11);
+			printf(temp->address);
+
+			x=7;
+			y=11;
+			gotoxy(x,y);
+			temp_name=run_textbox_with_initial(x,y,10,1,temp->name);
+			if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+			x+=11;
+			gotoxy(x,y);
+			temp_phone=run_textbox_with_initial(x,y,11,1,temp->phone);
+			if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+			x+=12;
+			gotoxy(x,y);
+			temp_address=run_textbox_with_initial(x,y,7,1,temp->address);
+			if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+		}
+		else
+		{
+			x=7;
+			y=11;
+			gotoxy(x,y);
+			temp_name=run_textbox_with_initial(x,y,10,1,temp_name);
+			if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+			x+=11;
+			gotoxy(x,y);
+			temp_phone=run_textbox_with_initial(x,y,11,1,temp_phone);
+			if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+			x+=12;
+			gotoxy(x,y);
+			temp_address=run_textbox_with_initial(x,y,7,1,temp_address);
+			if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+		}
+
+		do
+		{
+
+			button(8,14,"DELETE",1);
+			button(26,14,"DONE",0);
+			gotoxy(9,14);
 			ch=getch();
 			switch(ch)
 			{
+				case NULL:
+					ch=getch();
+					switch(ch)
+					{
+						case RIGHT:
+							button(8,14,"DELETE",0);
+							button(26,14,"DONE",1);
+							gotoxy(26,14);
+							ch2=getch();
+								switch(ch2)
+								{
+									case NULL:
+										ch=getch();
+										switch(ch)
+											{
+											case LEFT:
+												terminate=3;
+												break;
+										}
+										break;
+									case ENTER:
+										if(temp_name !="" || temp_name!=" " || temp_phone!="" || temp_phone!=" " || temp_address!="" ||temp_address!=" ")
+											{
+												delete_node(temp->name);
+												create_add_node(temp_name,temp_phone,temp_address);
+											}
+										terminate=1;
+										break;
+									case tab:
+										terminate=2;
+										break;
+								}
+							break;	
+						}
+						break;
 				case tab:
-				gotoxy(7+14,11);
-				txtbox(11);
-				ch=getch();
-				switch(ch)
-				{
-					case tab:
-					gotoxy(7+14+12,11);
-					txtbox(5);
+					button(8,14,"DELETE",0);
+					button(26,14,"DONE",1);
+					gotoxy(26,14);
+					ch2=getch();
+					switch(ch2)
+					{
+						case NULL:
+							ch=getch();
+							switch(ch)
+							{
+								case LEFT:
+									terminate=3;
+									break;
+							}
+							break;
+						case ENTER:
+							if(temp_name !="" || temp_name!=" " || temp_phone!="" || temp_phone!=" " || temp_address!="" ||temp_address!=" ")
+								{
+									delete_node(temp->name);
+									create_add_node(temp_name,temp_phone,temp_address);
+								}
+							terminate=1;
+							break;
+						case tab:
+							terminate=2;
+							break;
+					}
 					break;
-				}
-				break;
-			}	  
-
+				case ENTER:
+					delete_node(temp->name);
+					terminate=1;
+					break;
+			}
+		}while(terminate==3);
+		flag++;
+	}while(terminate==2);
+	clrscr();
+	background_color(0x00);
+	draw_border_shortcut(1,25);
+	draw_content();
+	display_all();
 }
 /*--------------------------------------------------   ..Written just to demonstrate textbox function..   ..Really shitting..----------------------------------------------------*/
 /*int main()
