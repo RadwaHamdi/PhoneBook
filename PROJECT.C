@@ -19,9 +19,10 @@ int main (void)
    //	getch();
    //	search_multiple_results("cairo",3);
    //	getch();
+
 	display_all();
-	temp=search("cairo",3);
-	viewsearchresult(temp);
+   //	temp=search("cairo",3);
+   //	viewsearchresult(temp);
    //	gets(name);
    //	gets(phone);
    //	gets(address);

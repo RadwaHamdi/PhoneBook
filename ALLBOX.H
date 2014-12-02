@@ -540,13 +540,12 @@ void deleteConfirmMessage()
 	draw_border_shortcut(1,25);
 	draw_content();
 	display_all();
-	draw_border_shortcut(1,25);
-	draw_content();
 }
-int deleteRecordMessage(char *name)//return 1 for delete return 0 for cancel
+int deleteRecordMessage()//return 1 for delete return 0 for cancel
 {
+	struct phonebook *temp;
 	int x1=6, y1=8, x2=40, y2=15;
-	int pos=0,i,j,n,k,index=0,b=0;
+	int pos=0,ii,j,n,k,index=0,b=0;
 	char key;
 	char nam[80];
 	int terminate=0;
@@ -555,6 +554,7 @@ int deleteRecordMessage(char *name)//return 1 for delete return 0 for cancel
 	char btn[2][10]={"DELETE","CANCEL"};
 	textbackground(BLACK);
 
+	temp=get_element_by_index(i);
 	 //big white box
 	textbackground(WHITE);
 	fillrect(x1,y1,x2+1,y2+1);
@@ -564,7 +564,7 @@ int deleteRecordMessage(char *name)//return 1 for delete return 0 for cancel
 	gotoxy(x1+3,y1+3);
 	cprintf("Are you sure you want to");
 	gotoxy(x1+4,y1+4);
-	cprintf("delete %s contact?",name);
+	cprintf("delete %s contact?",temp->name);
 
 	gotoxy(x1+2,y1+2);
 	textbackground(0x43);
@@ -575,11 +575,11 @@ int deleteRecordMessage(char *name)//return 1 for delete return 0 for cancel
 	do
 	{
 		//draw menu with highlight item
-		for(i=0;i<2;i++)
+		for(ii=0;ii<2;ii++)
 		{
-			if(i==pos)
+			if(ii==pos)
 			  selected=1;
-			button(x1+3+21*i,y2-1,btn[i],selected);
+			button(x1+3+21*ii,y2-1,btn[ii],selected);
 			selected=0;
 		
 		}
@@ -619,6 +619,7 @@ int deleteRecordMessage(char *name)//return 1 for delete return 0 for cancel
 				switch(pos)
 				{
 					case 0:
+						delete_node(temp->name);
 					    del=1;
 						break;
 					case 1:
@@ -641,8 +642,6 @@ int deleteRecordMessage(char *name)//return 1 for delete return 0 for cancel
 	draw_border_shortcut(1,25);
 	draw_content();
 	display_all();
-	draw_border_shortcut(1,25);
-	draw_content();
 	return del;
 }
 int saveBeforeClose()// return 0 for yes , 1 for no ,2 for cancel
@@ -719,7 +718,7 @@ int saveBeforeClose()// return 0 for yes , 1 for no ,2 for cancel
 					case 0:
 					 //save
 						save=0;
-						write_file();
+						write_file(currentFile);
 						break;
 					case 1:
 					  //no save

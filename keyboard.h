@@ -58,6 +58,7 @@ while(1)
 				break;
 
 				case del:
+					deleteRecordMessage();
 					//delete record
 				break;
 

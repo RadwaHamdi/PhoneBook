@@ -1,5 +1,3 @@
-a1,22367,cairo
-a2,336767,shoubra
 a3,22367,cairo
-ahmed,012,hellwan
-hossam,011,hellwan
+a1,22367,cairo
+sara,012345,iti
