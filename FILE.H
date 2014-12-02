@@ -4,12 +4,13 @@
 
 char fileNames[6][20];
 int index=0;
-char currentFile[20] = NULL;
+char currentFile[20]={NULL};
 
 void write_file(char fileName []);
 void read_file(char fileName []) ;
 int delete_file(char fileName []);  //returns 0 when file is successfully deleted otherwise when error happens
 FILE * open_file(char filename[]);
+void add_new_file(char filename[]);
 
 //write in a file function this function receives file mame as input param
 //and it writes my linked list of phonebook records in it
@@ -27,7 +28,7 @@ void write_file(char fileName [])
 	 fflush(fp);
    //	fwrite(tempstruct, sizeof(struct phonebook ), 3, fp);
 	   fprintf(fp,"%s,%s,%s",tempstruct->name,tempstruct->phone,tempstruct->address);
-	   
+
        if(tempstruct->next !=NULL)
 	  fprintf(fp,"\n");
    //   fprintf(fp, "\n  Testing...\n");
@@ -45,7 +46,7 @@ void read_file(char fileName [])
 	char * token;
 	char tempstr [150];
 	head = NULL;
-	strcpy(currentFile,fileName);
+	strcpy(currentFile ,fileName);
 	fp = fopen(fileName,"r+");
 	tempstruct = head;
 
@@ -54,7 +55,7 @@ void read_file(char fileName [])
 	tempstruct=create_node();
 
 	fscanf(fp,"%s",tempstr);
-	strcpy(token,strtok(tempstr,","));
+	token =strtok(tempstr,",");
 	//	printf("%s \n",token);
 		strcpy(tempstruct->name,token);
 		token = strtok(NULL,",");
@@ -87,6 +88,8 @@ FILE * open_file(char filename[])
 		FILE * fp;
 		strcat(filename,".txt");
 		fp = fopen(filename,"w");
+		add_new_file(filename);
+		strcpy(currentFile,filename);
 		fclose(fp);
 		index++;
 		return fp;
@@ -112,7 +115,7 @@ void read_file_name(void)
 	char tempstr [150];
 	fp = fopen("filename.txt","r");
 	fscanf(fp,"%s",tempstr);
-	(token =strtok(tempstr,",");
+	token = strtok(tempstr,",");
 	while(token != NULL)
 	{
 		strcpy(fileNames[index],token);
