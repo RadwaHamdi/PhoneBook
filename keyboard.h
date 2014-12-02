@@ -52,14 +52,14 @@ while(1)
 
 				case insert:
 				   //  add new record message box;
-				   newContact();
+					if(get_last_index() < 19)
+				   		newContact();
 						//clrscr();
 					//printf("name : %s phone: %s address: %s",contact[0],contact[1],contact[2]);
 				break;
 
 				case del:
 					deleteRecordMessage();
-					//delete record
 				break;
 
 			 	case f2:

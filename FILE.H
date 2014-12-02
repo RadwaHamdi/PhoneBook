@@ -46,6 +46,7 @@ void read_file(char fileName [])
 	char * token;
 	char tempstr [150];
 	head = NULL;
+	tail = NULL;
 	strcpy(currentFile ,fileName);
 	fp = fopen(fileName,"r+");
 	tempstruct = head;
@@ -112,15 +113,20 @@ void read_file_name(void)
 {
 	FILE *fp;
 	char * token;
-	char tempstr [150];
+	char tempstr [20];
+
+	index=0;
+
+
 	fp = fopen("filename.txt","r");
-	fscanf(fp,"%s",tempstr);
-	token = strtok(tempstr,",");
-	while(token != NULL)
+	
+	
+	while(!feof(fp))
 	{
-		strcpy(fileNames[index],token);
-		
-		index++;
+		fscanf(fp,"%s",tempstr);
 		token = strtok(tempstr,",");
+		strcpy(fileNames[index],token);
+		index++;
+		//token = strtok(tempstr,",");
 	}
 }

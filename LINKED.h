@@ -83,7 +83,7 @@ void highlight_line(int ii)
 {
 	int j;
 	struct phonebook* temp;
-	temp=get_element_by_index(ii);
+	
 
 	for(j=2;j<78;j++)
 	{
@@ -97,22 +97,21 @@ void highlight_line(int ii)
 		}
 	}
 
-//	for(j=2;j<70;j++)
-	//{       if(j==27||j==79)
-		//	continue;
-		  // else
-		   //{
-			textattr(HIGHLIGHT);
-			gotoxy(3,ii+4);
-			cprintf("%s",temp->name);
+	if(ii!=0 && ii!=20)
+	{
+		temp=get_element_by_index(ii);
+		textattr(HIGHLIGHT);
+		gotoxy(3,ii+4);
+		cprintf("%s",temp->name);
 
-			gotoxy(29,ii+4);
-			textattr(HIGHLIGHT);
-			cprintf("%s",temp->phone);
+		gotoxy(29,ii+4);
+		textattr(HIGHLIGHT);
+		cprintf("%s",temp->phone);
 
-			gotoxy(55,ii+4);
-			textattr(HIGHLIGHT);
-			cprintf("%s",temp->address);
+		gotoxy(55,ii+4);
+		textattr(HIGHLIGHT);
+		cprintf("%s",temp->address);
+	}
 			
 	//       }
 //	}
@@ -122,7 +121,7 @@ void normal_line(int ii)
 {
 	int j;
 	struct phonebook* temp;
-	temp=get_element_by_index(ii);
+	
 
 	for(j=2;j<78;j++)
 	{
@@ -136,22 +135,23 @@ void normal_line(int ii)
 		}
 	}
 
-//	for(j=2;j<70;j++)
-	//{       if(j==27||j==79)
-		//	continue;
-		  // else
-		   //{
-			textattr(NORMALL);
-			gotoxy(3,ii+4);
-			cprintf("%s",temp->name);
+	if(ii!=0 && ii!=20)
+	{
+		temp=get_element_by_index(ii);
 
-			gotoxy(29,ii+4);
-			textattr(NORMALL);
-			cprintf("%s",temp->phone);
+		textattr(NORMALL);
+		gotoxy(3,ii+4);
+		cprintf("%s",temp->name);
 
-			gotoxy(55,ii+4);
-			textattr(NORMALL);
-			cprintf("%s",temp->address);
+		gotoxy(29,ii+4);
+		textattr(NORMALL);
+		cprintf("%s",temp->phone);
+
+		gotoxy(55,ii+4);
+		textattr(NORMALL);
+		cprintf("%s",temp->address);
+	}
+	
 			
 	//       }
 //	}
@@ -400,27 +400,31 @@ void delete_node(char * key)
 
 void display_all(void)
 {
+
 	struct phonebook *temp=head;
 	int counter=5;
+	i=1;
 	clear_content();
 	while(temp)
 	{
+		if(counter>=5 && counter<=23)
+		{
+			gotoxy(3,counter);
+			textattr(0x0F);
+			
+			cprintf("%s",temp->name);
 
-		gotoxy(3,counter);
-		textattr(0x0F);
-		
-		cprintf("%s",temp->name);
+			gotoxy(29,counter);
+			textattr(0x0f);
+			cprintf("%s",temp->phone);
 
-		gotoxy(29,counter);
-		textattr(0x0f);
-		cprintf("%s",temp->phone);
+			gotoxy(55,counter);
+			textattr(0x0f);
+			cprintf("%s",temp->address);
 
-		gotoxy(55,counter);
-		textattr(0x0f);
-		cprintf("%s",temp->address);
-
-		temp=temp->next;
-		counter++;
+			temp=temp->next;
+			counter++;
+		}
 	}
 	add_index();
 	highlight_line(i);
