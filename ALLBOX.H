@@ -989,7 +989,7 @@ char * viewsearchbox(int index)
 	}
 	do
 	{
-
+		terminate=3;
 		button(8,14,"DONE",1);
 		button(17,14,"CANCEL",0);
 		gotoxy(9,14);
@@ -1021,6 +1021,9 @@ char * viewsearchbox(int index)
 									break;
 								case tab:
 									terminate=2;
+									break;
+								default:
+									terminate=3;
 									break;
 							}
 						break;	
@@ -1054,6 +1057,9 @@ char * viewsearchbox(int index)
 				if(temp_name !="" || temp_name!=" " || temp_phone!="" || temp_phone!=" " || temp_address!="" ||temp_address!=" ")
 					create_add_node(temp_name,temp_phone,temp_address);
 				terminate=1;
+				break;
+			default:
+				terminate=3;
 				break;
 		}
 	}while(terminate==3);
@@ -1095,8 +1101,14 @@ int deleteBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp
 				case RIGHT:
 					return editBtn(temp,temp_name,temp_phone,temp_address,ii);
 					//break;
+				default:
+					return 2;
+					break;
 			}
 			//break;
+		default:
+			return 2;
+			break;	
 	}
 	return 2;
 }
@@ -1129,8 +1141,14 @@ int editBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp_a
 				case RIGHT:
 					return nextBtn(temp,temp_name,temp_phone,temp_address,ii);
 					//break;
+				default:
+					return 2;
+					break;
 			}
 			//break;
+		default:
+			return 2;
+			break;
 	}
 	return 2;
 }
@@ -1178,8 +1196,14 @@ int nextBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp_a
 				case RIGHT:
 					return deleteBtn(temp,temp_name,temp_phone,temp_address,ii);
 					//break;
+				default:
+					return 2;
+					break;
 			}
 			//break;
+		default:
+			return 2;
+			break;
 	}
 	return 2;
 }
@@ -1395,7 +1419,6 @@ void showeditbox(char * name,char *tele ,char *address)
 
 		do
 		{
-
 			button(8,14,"DELETE",1);
 			button(26,14,"DONE",0);
 			gotoxy(9,14);
@@ -1469,6 +1492,9 @@ void showeditbox(char * name,char *tele ,char *address)
 				case ENTER:
 					delete_node(temp->name);
 					terminate=1;
+					break;
+				default:
+					terminate=3;
 					break;
 			}
 		}while(terminate==3);
