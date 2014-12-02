@@ -40,7 +40,7 @@ void makeMessageBox(int firstX,int firstY,int lastx , int lasty)
 void deleteMeessageBox(int firstx,int firsty,int lastx,int lasty,char * data)
 {
 	int i,j;
-	int index=0;
+//	int index=0;
 	for(j=firsty;j<lasty+firsty;j++)
 	{
 		for(i=firstx;i<lastx+firstx;i++)
@@ -134,7 +134,7 @@ char* run_textbox(int firstx,int firsty, int x,int y)
 				case ESC:
 					pressedEsc=1;
 					return "STOP";
-					break;
+					//break;
 				case ENTER:
 					textattr(NORMAL);
 					/*
@@ -303,7 +303,7 @@ char* run_textbox(int firstx,int firsty, int x,int y)
 							if(length>=x)
 								goCursor(current_index,x,firstx,firsty);
 						}
-					 }
+						 }
 					 else
 					 {
 						printf("%c",entered_char);
@@ -317,7 +317,7 @@ char* run_textbox(int firstx,int firsty, int x,int y)
 			}
 	}
 
-	return value;
+   //	return value;
 }
 
 
@@ -385,7 +385,7 @@ char* run_textbox_with_initial(int firstx,int firsty, int x,int y,char *initial)
 				case ESC:
 					pressedEsc=1;
 					return "STOP";
-					break;
+				   //	break;
 				case ENTER:
 					textattr(NORMAL);
 					/*
@@ -568,7 +568,7 @@ char* run_textbox_with_initial(int firstx,int firsty, int x,int y,char *initial)
 			}
 	}
 
-	return value;
+   //	return value;
 }
 
 /*

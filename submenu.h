@@ -279,10 +279,9 @@ void menu(int x, int y,int x2,int y2,int pos2)
 							notfoundsearch(0);
 						else
 						{
-						for(loap=0;loap<lengthOfArray;loap++)
-						{
-							viewsearchresult(temp[loap].name,temp[loap].phone,temp[loap].address,2);
-						}
+
+							viewsearchresult(temp);
+
 						}
 						//viewsearchresult(char * name,char *phone ,char *addr,)
 						//puttext(1,1,80,25,buffer);
@@ -299,10 +298,10 @@ void menu(int x, int y,int x2,int y2,int pos2)
 							notfoundsearch(1);
 						else
 						{
-						for(loap=0;loap< lengthOfArray;loap++)
-						{
-							viewsearchresult(temp[loap].name,temp[loap].phone,temp[loap].address,2);
-						}
+						//for(loap=0;loap< lengthOfArray;loap++)
+					   //	{
+							viewsearchresult(temp);
+					   //	}
 						}
 						//puttext(1,1,80,25,buffer);
 						terminate=1;
@@ -317,10 +316,10 @@ void menu(int x, int y,int x2,int y2,int pos2)
 							notfoundsearch(2);
 						else
 						{
-						for(loap=0;loap< lengthOfArray;loap++)
-						{
-							viewsearchresult(temp[loap].name,temp[loap].phone,temp[loap].address,2);
-						}
+					  //	for(loap=0;loap< lengthOfArray;loap++)
+					   //	{
+							viewsearchresult(temp);
+						//}
 						}
 						terminate=1;
 					break;

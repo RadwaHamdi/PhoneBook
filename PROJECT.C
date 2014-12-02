@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <conio.h>
 #include "keyboard.h"
-//#include "TEXTBOX.h"
+//#include "sTEXTBOX.h"
 
 int main (void)
 {
 	char name[80],phone[20],address[30];
+	struct phonebook* temp;
 	clrscr();
 	background_color(0x00);
 	draw_border_shortcut(1,25);
@@ -19,6 +20,8 @@ int main (void)
    //	search_multiple_results("cairo",3);
    //	getch();
 	display_all();
+	temp=search("cairo",3);
+	viewsearchresult(temp);
    //	gets(name);
    //	gets(phone);
    //	gets(address);
