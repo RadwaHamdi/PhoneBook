@@ -620,7 +620,8 @@ int deleteRecordMessage()//return 1 for delete return 0 for cancel
 				{
 					case 0:
 						delete_node(temp->name);
-					    del=1;
+						del=1;
+						terminate=1;
 						break;
 					case 1:
 						del=0;
@@ -881,7 +882,10 @@ char * viewsearchbox(int index)
   	flushall();
   	if(flag==0)
   	{
+	  	do
+	  	{
 	  		temp_name=run_textbox(x,y,10,1);
+	  	}while(temp_name && temp_name[0] == '\0');
 		//deleteMeess			ageBox(x,y,10,1,temp_name);
 		if(pressedEsc == 1)
 			{
@@ -892,7 +896,10 @@ char * viewsearchbox(int index)
 		gotoxy(x,y);
 		flushall();
 		
-		temp_phone=run_textbox(x,y,11,1);
+		do
+		{
+			temp_phone=run_textbox(x,y,11,1);
+		}while(temp_phone && temp_phone[0] == '\0');
 		//deleteMeessageBox(x,y,11,1,temp_phone);
 		if(pressedEsc == 1)
 			{
@@ -903,14 +910,59 @@ char * viewsearchbox(int index)
 		gotoxy(x,y);
 		flushall();
 		
-	    temp_address=run_textbox(x,y,7,1);
+		do
+		{
+	    	temp_address=run_textbox(x,y,7,1);
+	    }while(temp_address && temp_address[0] == '\0');
 		//deleteMeessageBox(x,y,7,1,temp_address);
 		if(pressedEsc == 1)
 			{
 				terminate=2;
 				break;
 			}
-		}
+	}
+	else
+	{
+		do
+	  	{
+	  		temp_name=run_textbox_with_initial(x,y,10,1,temp_name);
+	  	}while(temp_name && temp_name[0] == '\0');
+		//deleteMeess			ageBox(x,y,10,1,temp_name);
+		if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+		x+=11;
+		gotoxy(x,y);
+		flushall();
+		
+		do
+		{
+			temp_phone=run_textbox_with_initial(x,y,11,1,temp_phone);
+		}while(temp_phone && temp_phone[0] == '\0');
+		//deleteMeessageBox(x,y,11,1,temp_phone);
+		if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+		x+=12	;
+		gotoxy(x,y);
+		flushall();
+		
+		do
+		{
+	    	temp_address=run_textbox_with_initial(x,y,7,1,temp_address);
+	    }while(temp_address && temp_address[0] == '\0');
+		//deleteMeessageBox(x,y,7,1,temp_address);
+		if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+
+	}
 	do
 	{
 

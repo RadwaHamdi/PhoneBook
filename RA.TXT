@@ -1,3 +1,2 @@
-a3,22367,cairo
 a1,22367,cairo
 sara,012345,iti
