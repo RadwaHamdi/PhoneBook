@@ -2,8 +2,8 @@
 # include<conio.h>
 # include <stdio.h>
 # include <conio.h>
-
 # include <dos.h>
+# include "hossamtextbox.h"
 
 /* ..ASCII and Scan Codes of Keys.. */
 
@@ -345,36 +345,66 @@ void editmode()
 {
 	int terminate=0;
 	int x=7,y=11,i=0;
-	char ch;
+	char ch,ch2;
 	messagebox(5,7,40,15);
 	detectmouse();
 	showmousetext();
 	  gotoxy(x,y);
-	  contact[0]=txtbox(14);
+	  contact[0]=/*txtbox(14)*/run_textbox(x,y,14,1);
 	  x+=14;
-
-	   ch=getch();
+	  do
+	  { 
+	    ch=getch();
 		switch(ch)
 		{
 
 			case tab:
-
 				gotoxy(x,y);
-				contact[1]=txtbox(12);
+				contact[1]=run_textbox(x,y,12,1);
 				ch=getch();
 				 x+=12;
 				 switch(ch)
 				 {
 					case tab:
 					   gotoxy(x,y);
-					   contact[2]=txtbox(5);
+					   contact[2]=run_textbox(x,y,5,1);
+					   ch=getch();
+					   switch(ch)
+					   {
+					   		case tab:
+					   			gotoxy(9,14);
+					   			button(x1+3,y2-1,"DONE",1);
+								button(x1+12,y2-1,"CANCEL",0);
+					   			ch=getch();
+					   			switch(ch)
+					   			{
+
+					   				case tab:
+					   					gotoxy(18,14);
+					   					button(x1+3,y2-1,"DONE",0);
+										button(x1+12,y2-1,"CANCEL",1);
+					   					ch2=getch();
+					   					switch(ch2)
+					   					{
+					   						case ENTER:
+					   							terminate=1;
+					   							break;
+					   						case tab:
+					   							terminate=2;
+					   							break;
+					   					}
+					   					break;
+					   				case ENTER:
+					   					create_add_node(contact[0],contact[1],contact[2]);
+					   					terminate=1;
+					   					break;
+					   			}
+					   }
 					   break;
-					case ENTER:
-						terminate=1;
-						break;
 				}
 				break;
 		}
+	   }while(terminate==2);
 
 
 }

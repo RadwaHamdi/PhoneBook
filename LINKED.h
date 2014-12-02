@@ -140,6 +140,18 @@ void normal_line(int ii)
 ////////////////////
 ///////////////////////
 
+int get_last_index(void)
+{
+	int index=0;
+	struct phonebook *temp=head;
+	while(temp)
+	{
+		index++;
+		temp=temp->next;
+	}
+	return index;
+}
+
 void add_index(void)
 {
 int current_id=1;

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <conio.h>
-#include "LAYOUT.h"
 #include "keyboard.h"
 //#include "TEXTBOX.h"
 
@@ -15,10 +14,10 @@ int main (void)
 	showmousetext();
 	//write_file("radwa.txt");
 	read_file("RA.TXT");
-	display_all();
-	getch();
-	search_multiple_results("cairo",3);
-	getch();
+   //	display_all();
+   //	getch();
+   //	search_multiple_results("cairo",3);
+   //	getch();
 	display_all();
    //	gets(name);
    //	gets(phone);

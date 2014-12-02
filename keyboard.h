@@ -22,7 +22,6 @@
  void keyboard (void)
  {
 	char key;
-	char ** contact;
 	char * name={" "} ;
 	char * phone ={" "}; 
 	char * address ={" "};
@@ -53,7 +52,7 @@ while(1)
 
 				case insert:
 				   //  add new record message box;
-				   newContact(contact);
+				   newContact();
 						//clrscr();
 					//printf("name : %s phone: %s address: %s",contact[0],contact[1],contact[2]);
 				break;
@@ -67,15 +66,21 @@ while(1)
 				break; 
 				
 				case up:
-					normal_line(i);
-					i=i-1;
-					highlight_line(i);
+					if(i!=1)
+					{
+						normal_line(i);
+						i=i-1;
+						highlight_line(i);
+					}
 				break;
 				
 				case down:
-					normal_line(i);
-					i=i+1;
-					highlight_line(i);
+					if(i!=get_last_index())
+					{
+						normal_line(i);
+						i=i+1;
+						highlight_line(i);
+					}
 					//clrscr();
 				break;
 
