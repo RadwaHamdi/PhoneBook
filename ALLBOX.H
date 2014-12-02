@@ -36,6 +36,12 @@
 void rectborder(int,int,int,int,char *);
 void hline(int,int,int);
 void vline(int,int,int);
+int nextBtn(struct phonebook* ,char* ,char* ,char* ,int);
+int deleteBtn(struct phonebook* ,char* ,char* ,char* ,int);
+int editBtn(struct phonebook* ,char* ,char* ,char* ,int);
+void viewsearchresult(struct phonebook*);
+void notfoundsearch(int);
+
 union REGS in_regs, out_regs;
 
 void detectmouse (void)
@@ -378,7 +384,7 @@ void messageboxsearch(int x1,int y1,int x2,int y2,char * name,char *tele ,char *
 	gotoxy(x1+2,y1+4);
 	textcolor(BLACK);
 	textbackground(BLUE);
-	cprintf("%s  %s   %s",name,tele,address);
+	//cprintf("%s  %s   %s",name,tele,address);
    //radwa code	//ch=getch();
 	gotoxy(x1+4,y2-1);
 }
@@ -747,6 +753,246 @@ int saveBeforeClose()// return 0 for yes , 1 for no ,2 for cancel
 	draw_content();
 	display_all();
 }
+
+
+
+char * viewsearchbox(int index)
+{
+	char* key;
+    char keys[3][15]={"Name is :","Phone is :", "Address is :"};
+	int x1=5, y1=7, x2=40, y2=15;
+	char buffer [4096],key2,ch,ch2;
+	int terminate=0,loap;
+	struct phonebook * temp;
+	gettext(1,1,80,25,buffer);
+	textbackground(BLACK);
+ 
+	 //big white box
+	textbackground(WHITE);
+	fillrect(x1,y1,x2+1,y2+1);
+
+	textcolor(BLACK);
+	rectborder(x1+1,y1+1,x2-1,y2-1,"Search");
+	gotoxy(x1+3,y1+3);
+	cprintf(" %s ",keys[index]);
+	//button(x1+12,y2-1,"Search",0);
+	button(x1+8,y2-2,"Search",0);
+	button(x1+18,y2-2,"Cancel",0);
+	
+	
+	key=run_textbox(x1+14,y1+3,15,1);
+
+	//button(x1+21,y2-1,"NEXT");
+	//gotoxy(x1+2,y1+2);
+	do
+	{
+
+		button(x1+8,y2-2,"Search",1);
+		button(x1+18,y2-2,"CANCEL",0);
+		gotoxy(x1+9,y2-2);   // hena kda hayroo7 3nd Done
+		ch=getch();
+		switch(ch)
+		{
+			case NULL:
+				ch=getch();
+				switch(ch)
+				{
+				// to left button "cancel"
+				
+					case RIGHT:
+						button(x1+8,y2-2,"Search",0);
+						button(x1+18,y2-2,"CANCEL",1);
+						gotoxy(x1+19,y2-2);
+						ch2=getch();
+							switch(ch2)
+							{
+								case NULL:
+									ch=getch();
+									switch(ch)
+										{
+										case LEFT:
+											terminate=3;
+											break;
+										}
+								break;
+								case ENTER:
+									terminate=1;
+								break;
+								
+							}
+						break;	
+				}
+			break;
+			case tab:
+				button(x1+8,y2-2,"Search",0);
+				button(x1+18,y2-2,"CANCEL",1);
+				gotoxy(x1+19,y2-2);
+				ch2=getch();
+				switch(ch2)
+				{
+					case ENTER:
+						terminate=1;
+					break;
+					
+				}
+			break;
+			case ENTER:
+				
+				terminate=1;
+			break;
+		}
+		
+	}while(terminate==3);
+	
+	temp=search(key,index+1);
+	//printf("defwfffffffffffffffffffff");
+	if(lengthOfArray == 0)
+			notfoundsearch(index);
+	else
+		{
+		//commented till change viewsearchresult  parameters
+			 viewsearchresult(temp);
+			//viewsearchresult(temp);
+		}
+	
+	puttext(1,1,80,25,buffer);
+	
+	
+	return key;
+}
+
+ void newContact(void)
+{
+	char *temp_name;
+	char *temp_phone;
+	char *temp_address;
+	int terminate=0;
+	int x=7,y=11;
+	char ch,ch2;
+	int flag=0;
+	messageboxnew(5,7,40,15);
+	detectmouse();
+	showmousetext();
+	  
+  do
+  {
+  	x=7;
+  	y=11;
+  	gotoxy(x,y);
+  	flushall();
+  	if(flag==0)
+  	{
+	  		temp_name=run_textbox(x,y,10,1);
+		//deleteMeess			ageBox(x,y,10,1,temp_name);
+		if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+		x+=11;
+		gotoxy(x,y);
+		flushall();
+		
+		temp_phone=run_textbox(x,y,11,1);
+		//deleteMeessageBox(x,y,11,1,temp_phone);
+		if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+		x+=12	;
+		gotoxy(x,y);
+		flushall();
+		
+	    temp_address=run_textbox(x,y,7,1);
+		//deleteMeessageBox(x,y,7,1,temp_address);
+		if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+		}
+	do
+	{
+
+		button(8,14,"DONE",1);
+		button(17,14,"CANCEL",0);
+		gotoxy(9,14);
+		ch=getch();
+		switch(ch)
+		{
+			case NULL:
+				ch=getch();
+				switch(ch)
+				{
+					case RIGHT:
+						button(8,14,"DONE",0);
+						button(17,14,"CANCEL",1);
+						gotoxy(17,14);
+						ch2=getch();
+							switch(ch2)
+							{
+								case NULL:
+									ch=getch();
+									switch(ch)
+										{
+										case LEFT:
+											terminate=3;
+											break;
+									}
+									break;
+								case ENTER:
+									terminate=1;
+									break;
+								case tab:
+									terminate=2;
+									break;
+							}
+						break;	
+					}
+					break;
+			case tab:
+				button(8,14,"DONE",0);
+				button(17,14,"CANCEL",1);
+				gotoxy(17,14);
+				ch2=getch();
+				switch(ch2)
+				{
+					case NULL:
+						ch=getch();
+						switch(ch)
+						{
+							case LEFT:
+								terminate=3;
+								break;
+						}
+						break;
+					case ENTER:
+						terminate=1;
+						break;
+					case tab:
+						terminate=2;
+						break;
+				}
+				break;
+			case ENTER:
+				if(temp_name !="" || temp_name!=" " || temp_phone!="" || temp_phone!=" " || temp_address!="" ||temp_address!=" ")
+					create_add_node(temp_name,temp_phone,temp_address);
+				terminate=1;
+				break;
+		}
+	}while(terminate==3);
+	flag++;
+}while(terminate==2);
+	   clrscr();
+		background_color(0x00);
+		draw_border_shortcut(1,25);
+		draw_content();
+	   display_all();
+}
+
+
+
 int deleteBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp_address,int ii)
 {
 	char ch;
@@ -817,6 +1063,7 @@ int editBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp_a
 int nextBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp_address,int ii)
 {
 	char ch;
+	struct phonebook * temp2;
 	button(8,14,"DELETE",0);
 	button(17,14,"EDIT",0);
 	button(26,14,"NEXT",1);
@@ -829,23 +1076,22 @@ int nextBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp_a
 			//break;
 
 		case ENTER:
-			if(ii+1<lengthOfArray)
-			{
-				clrscr();
-				background_color(0x00);
-				draw_border_shortcut(1,25);
-				draw_content();
-				display_all();
-				ii=ii+1;
-				temp++;
-				viewsearchresult(temp);
-				return 1;
-			}
-			else
-			{
-				return nextBtn(temp,temp_name,temp_phone,temp_address,ii);
-			}
-		   //	break;
+				if(!(ii+1<lengthOfArray))
+				{
+					return nextBtn(temp,temp_name,temp_phone,temp_address,ii);
+				}
+				if(ii+1<lengthOfArray)
+				{
+					ii+=1;
+					clrscr();
+					background_color(0x00);
+					draw_border_shortcut(1,25);
+					draw_content();
+					display_all();
+					temp++;
+					viewsearchresult(temp);
+				}
+			  return 1;
 
 		case NULL:
 			ch=getch();
@@ -864,86 +1110,270 @@ int nextBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp_a
 }
 
 
-/*char * viewsearchbox(int index)
+
+void viewsearchresult(struct phonebook *temp)
 {
-	char* key;
-    char keys[3][15]={"Name is :","Phone is :", "Address is :"};
-	int x1=5, y1=7, x2=40, y2=15;
-	char buffer [4096],key2;
-	//struct phonebook * temp;
-	gettext(1,1,80,25,buffer);
-	textbackground(BLACK);
+	char *temp_name;
+	char *temp_phone;
+	char *temp_address;
+	int terminate=0;
+	int x=7,y=11;
+	char ch,ch2;
+	int flag=0;
 
-	 //big white box
-	textbackground(WHITE);
-	fillrect(x1,y1,x2+1,y2+1);
-
-	textcolor(BLACK);
-	rectborder(x1+1,y1+1,x2-1,y2-1,"Search");
-	gotoxy(x1+3,y1+3);
-	cprintf(" %s ",keys[index]);
-	button(x1+12,y2-1,"Search",0);
-
-	gotoxy(x1+14,y1+3);
-	textbackground(BLUE);
-	key=txtbox(15);
-
-	//button(x1+21,y2-1,"NEXT");
-	gotoxy(x1+2,y1+2);
-
-	//// when press enter the box dissappear and data return to its state
-	flushall();
-	key2=getch();
-	switch(key2)
-	{
-		case enter:
-
-			puttext(1,1,80,25,buffer);
-		break;
-	}
-	return key;
-}*/
-char * viewsearchbox(int index)
-{
-	char* key;
-    char keys[3][15]={"Name is :","Phone is :", "Address is :"};
-	int x1=5, y1=7, x2=40, y2=15;
-	char buffer [4096],key2;
-	//struct phonebook * temp;
-	gettext(1,1,80,25,buffer);
-	textbackground(BLACK);
- //		textcolor(BLACK);
-   //	rectborder(x1+1,y1+1,x2-1,y2-1);
-     //	fillrect(0,0,80,30);
-	 //big white box
-	textbackground(WHITE);
-	fillrect(x1,y1,x2+1,y2+1);
-
-	textcolor(BLACK);
-	rectborder(x1+1,y1+1,x2-1,y2-1,"Search");
-	gotoxy(x1+3,y1+3);
-	cprintf(" %s ",keys[index]);
-	button(x1+12,y2-1,"Search",0/*radwa code*/);
-
-	gotoxy(x1+14,y1+3);
-	textbackground(BLUE);
-	key=txtbox(15);
-
-	//button(x1+21,y2-1,"NEXT");
-	gotoxy(x1+2,y1+2);
-
-	//// when press enter the box dissappear and data return to its state
-	flushall();
-	key2=getch();
-	switch(key2)
-	{
-		case enter:
+	messageboxsearch(5,7,40,15,temp->name,temp->phone,temp->address);
+	detectmouse();
+	showmousetext();
+	  
+  do
+  {
+  	if(flag==0)
+		{
 			
-			puttext(1,1,80,25,buffer);
-		break;
-	}
-	return key;
+			gotoxy(7,11);
+			printf(temp->name);
+			gotoxy(7+12,11);
+			printf(temp->phone);
+			gotoxy(7+12+12,11);
+			printf(temp->address);
+			
+			x=7;
+			y=11;
+			gotoxy(x,y);
+			temp_name=run_textbox_with_initial(x,y,10,1,temp->name);
+			if(pressedEsc == 1)
+			{
+				terminate=1;
+				break;
+			}
+			x+=12;
+			gotoxy(x,y);
+			temp_phone=run_textbox_with_initial(x,y,11,1,temp->phone);
+			if(pressedEsc == 1)
+			{
+				terminate=1;
+				break;
+			}
+			x+=12;
+			gotoxy(x,y);
+			temp_address=run_textbox_with_initial(x,y,7,1,temp->address);
+			if(pressedEsc == 1)
+			{
+				terminate=1;
+				break;
+			}
+		}
+	else
+		{
+			x=7;
+			y=11;
+				gotoxy(x,y);
+			temp_name=run_textbox_with_initial(x,y,10,1,temp_name);
+			if(pressedEsc == 1)
+			{
+				terminate=1;
+				break;
+			}
+			x+=12;
+			gotoxy(x,y);
+			temp_phone=run_textbox_with_initial(x,y,11,1,temp_phone);
+			if(pressedEsc == 1)
+			{
+				terminate=1;
+				break;
+			}
+			x+=12;
+			gotoxy(x,y);
+			temp_address=run_textbox_with_initial(x,y,7,1,temp_address);
+			if(pressedEsc == 1)
+			{
+				terminate=1;
+				break;
+			}
+		}
+
+		terminate=deleteBtn(temp,temp_name,temp_phone,temp_address,0);
+		flag++;
+  }while(terminate==2);
+	   clrscr();
+		background_color(0x00);
+		draw_border_shortcut(1,25);
+		draw_content();
+	    display_all();
 }
+
+void showeditbox(char * name,char *tele ,char *address)
+{
+	char ch;
+	char ch2;
+	struct phonebook *temp;
+	int flag=0;
+	char *temp_name;
+	char *temp_phone;
+	char *temp_address;
+	int terminate=0;
+	int x;
+	int y;
+	temp=get_element_by_index(i);
+	messageboxedit(5,7,40,15, name,tele ,address);
+	do
+	{
+		if(flag==0)
+		{
+			gotoxy(7,11);
+			printf(temp->name);
+			gotoxy(7+11,11);
+			printf(temp->phone);
+			gotoxy(7+11+12,11);
+			printf(temp->address);
+
+			x=7;
+			y=11;
+			gotoxy(x,y);
+			temp_name=run_textbox_with_initial(x,y,10,1,temp->name);
+			if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+			x+=11;
+			gotoxy(x,y);
+			temp_phone=run_textbox_with_initial(x,y,11,1,temp->phone);
+			if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+			x+=12;
+			gotoxy(x,y);
+			temp_address=run_textbox_with_initial(x,y,7,1,temp->address);
+			if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+		}
+		else
+		{
+			x=7;
+			y=11;
+			gotoxy(x,y);
+			temp_name=run_textbox_with_initial(x,y,10,1,temp_name);
+			if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+			x+=11;
+			gotoxy(x,y);
+			temp_phone=run_textbox_with_initial(x,y,11,1,temp_phone);
+			if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+			x+=12;
+			gotoxy(x,y);
+			temp_address=run_textbox_with_initial(x,y,7,1,temp_address);
+			if(pressedEsc == 1)
+			{
+				terminate=2;
+				break;
+			}
+		}
+
+		do
+		{
+
+			button(8,14,"DELETE",1);
+			button(26,14,"DONE",0);
+			gotoxy(9,14);
+			ch=getch();
+			switch(ch)
+			{
+				case NULL:
+					ch=getch();
+					switch(ch)
+					{
+						case RIGHT:
+							button(8,14,"DELETE",0);
+							button(26,14,"DONE",1);
+							gotoxy(26,14);
+							ch2=getch();
+								switch(ch2)
+								{
+									case NULL:
+										ch=getch();
+										switch(ch)
+											{
+											case LEFT:
+												terminate=3;
+												break;
+										}
+										break;
+									case ENTER:
+										if(temp_name !="" || temp_name!=" " || temp_phone!="" || temp_phone!=" " || temp_address!="" ||temp_address!=" ")
+											{
+												delete_node(temp->name);
+												create_add_node(temp_name,temp_phone,temp_address);
+											}
+										terminate=1;
+										break;
+									case tab:
+										terminate=2;
+										break;
+								}
+							break;	
+						}
+						break;
+				case tab:
+					button(8,14,"DELETE",0);
+					button(26,14,"DONE",1);
+					gotoxy(26,14);
+					ch2=getch();
+					switch(ch2)
+					{
+						case NULL:
+							ch=getch();
+							switch(ch)
+							{
+								case LEFT:
+									terminate=3;
+									break;
+							}
+							break;
+						case ENTER:
+							if(temp_name !="" || temp_name!=" " || temp_phone!="" || temp_phone!=" " || temp_address!="" ||temp_address!=" ")
+								{
+									delete_node(temp->name);
+									create_add_node(temp_name,temp_phone,temp_address);
+								}
+							terminate=1;
+							break;
+						case tab:
+							terminate=2;
+							break;
+					}
+					break;
+				case ENTER:
+					delete_node(temp->name);
+					terminate=1;
+					break;
+			}
+		}while(terminate==3);
+		flag++;
+	}while(terminate==2);
+	clrscr();
+	background_color(0x00);
+	draw_border_shortcut(1,25);
+	draw_content();
+	display_all();
+}
+
+
+
+
+
 char* createFileBox(void)
 {
 	char* fname;
@@ -972,258 +1402,8 @@ char* createFileBox(void)
 	   return NULL;
 	return fname;
 }
- void newContact(void)
-{
-	char *temp_name;
-	char *temp_phone;
-	char *temp_address;
-	int terminate=0;
-	int x=7,y=11,ii=0;
-	char ch,ch2;
-	int flag=0;
-	messageboxnew(5,7,40,15);
-	detectmouse();
-	showmousetext();
 
-		  do
-		  {
-			x=7;
-			y=11;
-			gotoxy(x,y);
-			flushall();
-			if(flag==0)
-				temp_name=run_textbox(x,y,10,1);
-			//deleteMeess			ageBox(x,y,10,1,temp_name);
-			if(pressedEsc == 1)
-				{
-					terminate=2;
-					break;
-				}
-			x+=11;
-			gotoxy(x,y);
-			flushall();
-			if(flag==0)
-				temp_phone=run_textbox(x,y,11,1);
-			//deleteMeessageBox(x,y,11,1,temp_phone);
-			if(pressedEsc == 1)
-				{
-					terminate=2;
-					break;
-				}
-			x+=12	;
-			gotoxy(x,y);
-			flushall();
-			if(flag==0)
-				temp_address=run_textbox(x,y,7,1);
-			//deleteMeessageBox(x,y,7,1,temp_address);
-			if(pressedEsc == 1)
-				{
-					terminate=2;
-					break;
-				}
-			do
-			{
 
-				button(8,14,"DONE",1);
-				button(17,14,"CANCEL",0);
-				gotoxy(9,14);
-				ch=getch();
-				switch(ch)
-				{
-					case NULL:
-						ch=getch();
-						switch(ch)
-						{
-							case RIGHT:
-								button(8,14,"DONE",0);
-								button(17,14,"CANCEL",1);
-								gotoxy(17,14);
-								ch2=getch();
-									switch(ch2)
-									{
-										case NULL:
-											ch=getch();
-											switch(ch)
-												{
-												case LEFT:
-													terminate=3;
-													break;
-											}
-											break;
-										case ENTER:
-											terminate=1;
-											break;
-										case tab:
-											terminate=2;
-											break;
-									}
-								break;
-							}
-							break;
-					case tab:
-						button(8,14,"DONE",0);
-						button(17,14,"CANCEL",1);
-						gotoxy(17,14);
-						ch2=getch();
-						switch(ch2)
-						{
-							case NULL:
-								ch=getch();
-								switch(ch)
-								{
-									case LEFT:
-										terminate=3;
-										break;
-								}
-								break;
-							case ENTER:
-								terminate=1;
-								break;
-							case tab:
-								terminate=2;
-								break;
-						}
-						break;
-					case ENTER:
-						if(temp_name !="" || temp_name!=" " || temp_phone!="" || temp_phone!=" " || temp_address!="" ||temp_address!=" ")
-							create_add_node(temp_name,temp_phone,temp_address);
-						terminate=1;
-						break;
-				}
-			}while(terminate==3);
-			flag++;
-		}while(terminate==2);
-			   clrscr();
-				background_color(0x00);
-				draw_border_shortcut(1,25);
-				draw_content();
-			   display_all();
-}
-void viewsearchresult(char * name,char *phone ,char *addr,int action)
-{
-	//0 for delete ,1 for edit ,2 for next
-	//int actions[]={0,1,2};
-	char ch;
-	messageboxsearch(5,7,40,15,name,phone,addr);
-	/***
-	do
-	{
-		//draw menu with highlight item
-		for(i=0;i<2;i++)
-		{
-			if(i==pos)
-			  selected=1;
-			button(x1+3+21*i,y2-1,btn[i],selected);
-			    //	textattr(0x10);
-		       //	gotoxy(x1+3+21*i,y2-1);
-		       //	cprintf("%s",btn[i]);
-			selected=0;
-			       //	textattr(0x43);
-		}
-		flushall();
-		key=getch();
-		switch(key)
-		{
-			case '\0':
-				key=getch();
-				switch(key)
-				{
-					case LEFT:
-						pos--;
-						if(pos<0)pos=1;
-						break;
-					case RIGHT:
-						pos++;
-						if(pos>1)pos=0;
-						break;
-					case home:
-						pos=0;
-						break;
-					case end:
-						pos=1;
-						break;
-					case pageup:
-						pos--;
-						if(pos<0)pos=1;
-						break;
-					case pagedown:
-						pos++;
-						if(pos>1)pos=0;
-						break;
-				}
-				break;
-			case enter:
-				switch(pos)
-				{
-					case 0:
-						break;
-					case 1:
-						terminate=1;
-						break;
-				}
-				break;
-			case tab:
-				pos++;
-				if(pos>1)pos=0;
-				break;
-			case esc:
-				terminate=1;
-				break;
-		}
-	}while(terminate!=1);*/
-	/*	switch(action)
-	{
-		case 0:// delete action
-			break;
-		case 1://case edit
-			gotoxy(7,11);
-			txtbox(14);
-			ch=getch();
-			switch(ch)
-			{
-				case tab:
-				gotoxy(7+14,11);
-				txtbox(11);
-				ch=getch();
-				switch(ch)
-				{
-					case tab:
-					gotoxy(7+14+12,11);
-					txtbox(5);
-					break;
-				}
-				break;
-			}
-			break;
-		case 2:// case next
-			break;
-	}*/
-
-}
-void showeditbox(char * name,char *tele ,char *address)
-{
-	char ch;
-	messageboxedit(5,7,40,15, name,tele ,address);
-	gotoxy(7,11);
-			txtbox(14);
-			ch=getch();
-			switch(ch)
-			{
-				case tab:
-				gotoxy(7+14,11);
-				txtbox(11);
-				ch=getch();
-				switch(ch)
-				{
-					case tab:
-					gotoxy(7+14+12,11);
-					txtbox(5);
-					break;
-				}
-				break;
-			}
-
-}
 void openfile(/*char* files,int size*/)
 {
 	int x1=6, y1=8, x2=35, y2=17;
