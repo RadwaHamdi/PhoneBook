@@ -781,8 +781,11 @@ char * viewsearchbox(int index)
 	
 	do
 	{
-		key=run_textbox(x1+14,y1+3,15,1);
-	}while(key && key[0]=='\0' || (is_spaces(key)) || (index==1 && !(is_phone(key))) );
+		do
+		{
+			if(terminate!=4) key=run_textbox(x1+14,y1+3,15,1);
+			else			 key=run_textbox_with_initial(x1+14,y1+3,15,1,key);
+		}while(key && key[0]=='\0' || (is_spaces(key)) || (index==1 && !(is_phone(key))) );
 
 	//button(x1+21,y2-1,"NEXT");
 	//gotoxy(x1+2,y1+2);
@@ -812,6 +815,7 @@ char * viewsearchbox(int index)
 									ch=getch();
 									switch(ch)
 										{
+										case RIGHT:
 										case LEFT:
 											terminate=3;
 											break;
@@ -820,6 +824,9 @@ char * viewsearchbox(int index)
 								case ENTER:
 									terminate=1;
 								break;
+								case tab:
+									terminate=4;//back to text
+									break;
 								
 							}
 						break;	
@@ -830,32 +837,45 @@ char * viewsearchbox(int index)
 				button(x1+18,y2-2,"CANCEL",1);
 				gotoxy(x1+19,y2-2);
 				ch2=getch();
-				switch(ch2)
-				{
-					case ENTER:
-						terminate=1;
-					break;
-					
-				}
-			break;
+					switch(ch2)
+					{
+						case NULL:
+							ch=getch();
+							switch(ch)
+								{
+								case RIGHT:
+								case LEFT:
+									terminate=3;
+									break;
+								}
+							break;
+						case ENTER:
+							terminate=1;
+							break;
+						case tab:
+							terminate=4;//back to text
+							break;
+					}
+				break;	
 			case ENTER:
-				
+				temp=search(key,index+1);
+				//printf("defwfffffffffffffffffffff");
+				if(lengthOfArray == 0)
+						notfoundsearch(index);
+				else
+					{
+					//commented till change viewsearchresult  parameters
+						 viewsearchresult(temp);
+						//viewsearchresult(temp);
+					}
 				terminate=1;
-			break;
+				break;
 		}
 		
 	}while(terminate==3);
+	}while(terminate==4);
 	
-	temp=search(key,index+1);
-	//printf("defwfffffffffffffffffffff");
-	if(lengthOfArray == 0)
-			notfoundsearch(index);
-	else
-		{
-		//commented till change viewsearchresult  parameters
-			 viewsearchresult(temp);
-			//viewsearchresult(temp);
-		}
+	
 	
 	puttext(1,1,80,25,buffer);
 	
@@ -901,7 +921,7 @@ char * viewsearchbox(int index)
 		do
 		{
 			temp_phone=run_textbox(x,y,11,1);
-		}while(temp_phone && temp_phone[0] == '\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))));
+		}while(temp_phone && temp_phone[0] == '\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 ) );
 		//deleteMeessageBox(x,y,11,1,temp_phone);
 		if(pressedEsc == 1)
 			{
@@ -942,7 +962,7 @@ char * viewsearchbox(int index)
 		do
 		{
 			temp_phone=run_textbox_with_initial(x,y,11,1,temp_phone);
-		}while(temp_phone && temp_phone[0] == '\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))));
+		}while(temp_phone && temp_phone[0] == '\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 ) );
 		//deleteMeessageBox(x,y,11,1,temp_phone);
 		if(pressedEsc == 1)
 			{
@@ -1207,7 +1227,7 @@ void viewsearchresult(struct phonebook *temp)
 			do
 			{	
 				temp_phone=run_textbox_with_initial(x,y,11,1,temp->phone);
-			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))));
+			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 ) );
 			if(pressedEsc == 1)
 			{
 				terminate=1;
@@ -1244,7 +1264,7 @@ void viewsearchresult(struct phonebook *temp)
 			do
 			{	
 				temp_phone=run_textbox_with_initial(x,y,11,1,temp_phone);
-			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))));
+			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 ) );
 			if(pressedEsc == 1)
 			{
 				terminate=1;
@@ -1254,7 +1274,7 @@ void viewsearchresult(struct phonebook *temp)
 			gotoxy(x,y);
 			do
 			{
-				temp_name=run_textbox_with_initial(x,y,7,1,temp_name);
+				temp_address=run_textbox_with_initial(x,y,7,1,temp_address);
 			}while(temp_name && temp_name[0] == '\0' || (is_spaces(temp_address)));
 			if(pressedEsc == 1)
 			{
@@ -1315,7 +1335,7 @@ void showeditbox(char * name,char *tele ,char *address)
 			do
 			{	
 				temp_phone=run_textbox_with_initial(x,y,11,1,temp->phone);
-			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))));
+			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 ) );
 			if(pressedEsc == 1)
 			{
 				terminate=2;
@@ -1352,7 +1372,7 @@ void showeditbox(char * name,char *tele ,char *address)
 			do
 			{	
 				temp_phone=run_textbox_with_initial(x,y,11,1,temp_phone);
-			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))));
+			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 ) );
 			if(pressedEsc == 1)
 			{
 				terminate=2;
@@ -1362,7 +1382,7 @@ void showeditbox(char * name,char *tele ,char *address)
 			gotoxy(x,y);
 			do
 			{
-				temp_name=run_textbox_with_initial(x,y,7,1,temp_name);
+				temp_address=run_textbox_with_initial(x,y,7,1,temp_address);
 			}while(temp_name && temp_name[0] == '\0' || (is_spaces(temp_address)));
 			if(pressedEsc == 1)
 			{
