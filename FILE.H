@@ -4,7 +4,7 @@
 
 char fileNames[6][20];
 int index=0;
-char currentFile[20];
+char currentFile[20] = NULL;
 
 void write_file(char fileName []);
 void read_file(char fileName []) ;
