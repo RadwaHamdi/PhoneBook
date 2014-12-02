@@ -437,6 +437,7 @@ void notfoundsearch(int field)
 	textbackground(0x43);
 
 	gotoxy(x1+4,y2-1);
+	getch();
 }
 void deleteConfirmMessage()
 {
@@ -785,10 +786,11 @@ char * viewsearchbox(int index)
 		{
 			if(terminate!=4) key=run_textbox(x1+14,y1+3,15,1);
 			else			 key=run_textbox_with_initial(x1+14,y1+3,15,1,key);
-		}while(key && key[0]=='\0' || (is_spaces(key)) || (index==1 && !(is_phone(key))) );
+		}while(key && key[0]=='\0' || (is_spaces(key)) || ((index==1 && !(is_phone(key)))  && (strcmp(key,"STOP")!=0)) );
 
 	//button(x1+21,y2-1,"NEXT");
 	//gotoxy(x1+2,y1+2);
+		if(pressedEsc == 1) break;
 	do
 	{
 
