@@ -44,6 +44,31 @@ void add_index(void);
 //////////////////
 //////////////////
 
+int lastcharcomma(char *temp)
+{
+	while(*temp != '\0')
+	{
+		if(*(temp+1)=='\0' && *temp==',')
+			return 1;
+		temp++;
+	}
+	return 0;	
+}
+
+char * lowercase(char * str)
+{
+	int i;
+	char *temp;
+	int length=strlen(str);
+	temp=(char *)malloc(length*sizeof(char));
+
+	for(i = 0; str[i]!='\0'; i++)
+		{
+  			temp[i] = tolower(str[i]);
+		}
+	return temp;
+}
+
 int is_phone(char *temp)
 {
 	while(*temp != '\0')
@@ -445,7 +470,7 @@ int insert_node(struct phonebook * node)
 				   return 1;
 	 }
 	 //only one element exist && insertion is done after it
-	 else if(head==tail && head!=NULL && strcmp(node->name,head->name)>0)
+	 else if(head==tail && head!=NULL && strcmp(lowercase(node->name),lowercase(head->name))>0)
 	 {
 			   tail=node;
 			   head->next=node;
@@ -455,7 +480,7 @@ int insert_node(struct phonebook * node)
 			   return 1;
 	 }
 	 //insert in first location
-	 else if(strcmp(node->name,head->name)<0)
+	 else if(strcmp(lowercase(node->name),lowercase(head->name))<0 || strcmp(lowercase(node->name),lowercase(head->name))==0)
 	 {
 		  node->next=head;
 		  head->prev=node;
@@ -466,10 +491,10 @@ int insert_node(struct phonebook * node)
 	 }
 	 else
 		 {
-		 while(temp&&strcmp(node->name,temp->name)>0)
+		 while(temp&&strcmp(lowercase(node->name),lowercase(temp->name))>0)
 		 {
 			   //add at last position
-			   if(temp==tail && strcmp(node->name,temp->name)>0)
+			   if(temp==tail && strcmp(lowercase(node->name),lowercase(temp->name))>0)
 			   {
 					  tail->next=node;
 					  node->prev=tail;
