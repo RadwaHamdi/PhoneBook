@@ -113,20 +113,15 @@ void read_file_name(void)
 {
 	FILE *fp;
 	char * token;
-	char tempstr [20];
-
-	index=0;
-
-
+	char tempstr [150];
 	fp = fopen("filename.txt","r");
-	
-	
-	while(!feof(fp))
+	fscanf(fp,"%s",tempstr);
+	token = strtok(tempstr,",");
+	while(token != NULL)
 	{
-		fscanf(fp,"%s",tempstr);
-		token = strtok(tempstr,",");
 		strcpy(fileNames[index],token);
+		
 		index++;
-		//token = strtok(tempstr,",");
+		token = strtok(tempstr,",");
 	}
 }
