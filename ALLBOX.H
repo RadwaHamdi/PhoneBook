@@ -1086,26 +1086,26 @@ int deleteBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp
 	{
 		case tab:
 			return editBtn(temp,temp_name,temp_phone,temp_address,ii);
-			//break;
+			break;
 		case ENTER:
 			delete_node(temp->name);
 			return 1;
-			//break;
+			break;
 		case NULL:
 			ch=getch();
 			switch(ch)
 			{
 				case LEFT:
 					return nextBtn(temp,temp_name,temp_phone,temp_address,ii);
-					//break;
+					break;
 				case RIGHT:
 					return editBtn(temp,temp_name,temp_phone,temp_address,ii);
-					//break;
+					break;
 				default:
 					return 2;
 					break;
 			}
-			//break;
+			break;
 		default:
 			return 2;
 			break;	
@@ -1456,8 +1456,14 @@ void showeditbox(char * name,char *tele ,char *address)
 									case tab:
 										terminate=2;
 										break;
+									default:
+										terminate=3;
+										break;
 								}
 							break;	
+						default:
+							terminate=3;
+							break;
 						}
 						break;
 				case tab:
@@ -1486,6 +1492,9 @@ void showeditbox(char * name,char *tele ,char *address)
 							break;
 						case tab:
 							terminate=2;
+							break;
+						default:
+							terminate=3;
 							break;
 					}
 					break;
