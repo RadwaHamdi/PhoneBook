@@ -16,7 +16,7 @@
 #define DOWN  80
 #define BACKSPACE 8
 #define tab 9
-#define bks 8
+
 //#define startY 5
 //#define startX 1
 
@@ -183,44 +183,6 @@ char* run_textbox(int firstx,int firsty, int x,int y)
 							break;
 							*/
 						break;
-	
-	case bks :
-					if(current_index<=1) {
-							current_index=1;
-							*(current-1)=' ';
-							printf("%c",*(current));
-					}
-
-					else
-					{
-						current_index--;
-						last_index--;
-						current--;
-						last--;
-						goCursor(current_index,x,firstx,firsty);
-//gotoxy(crt+30,8);
-//b5zan el kym eli b3dee 3andee
-						for(i=current_index;i<=last_index;i++){
-								
-									*(current)=*(current+1);
-									//*(i+1)=' ';
-									
-// gotoxy(30+i,8);
-						}
-//hena byzher el dat on screen
-								if(i==last_index+1)
-									{
-// *(pstart+i)=' ';
-									for(i=0;i<=last_index;i++)
-									{
-										goCursor(current_index,x,firstx,firsty);
-										printf("%c",*(first+i));
-									}
-									}
-					}
-									goCursor(current_index,x,firstx,firsty);
-					break;
-
 				case NULL:
 					entered_char=getch();
 					switch(entered_char)
@@ -325,7 +287,7 @@ char* run_textbox(int firstx,int firsty, int x,int y)
 					}
 					break;
 			   default:
-				  if(isprint(entered_char) && (entered_char!=','))
+				  if(isprint(entered_char))
 				  {
 					 if(current_index==last_index)
 					 {

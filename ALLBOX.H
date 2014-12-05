@@ -485,7 +485,6 @@ void deleteConfirmMessage()
 			selected=0;
 			       //	textattr(0x43);
 		}
-	do{
 		flushall();
 		key=getch();
 		switch(key)
@@ -516,9 +515,6 @@ void deleteConfirmMessage()
 						pos++;
 						if(pos>1)pos=0;
 						break;
-					default:
-						terminate=2;
-						break;
 				}
 				break;
 			case enter:
@@ -538,11 +534,7 @@ void deleteConfirmMessage()
 			case esc:
 				terminate=1;
 				break;
-			default:
-				terminate=2;
-				break;
 		}
-		}while(terminate ==2);
 	}while(terminate!=1);
 	clrscr();
 	background_color(0x00);
@@ -582,7 +574,7 @@ int deleteRecordMessage()//return 1 for delete return 0 for cancel
 
 	/*****/
 	do
-	{do{
+	{
 		//draw menu with highlight item
 		for(ii=0;ii<2;ii++)
 		{
@@ -592,7 +584,6 @@ int deleteRecordMessage()//return 1 for delete return 0 for cancel
 			selected=0;
 		
 		}
-	
 		flushall();
 		key=getch();
 		switch(key)
@@ -623,9 +614,6 @@ int deleteRecordMessage()//return 1 for delete return 0 for cancel
 						pos++;
 						if(pos>1)pos=0;
 						break;
-					default:
-						terminate=2;
-						break;
 				}
 				break;
 			case enter:
@@ -649,11 +637,7 @@ int deleteRecordMessage()//return 1 for delete return 0 for cancel
 			case esc:
 				terminate=1;
 				break;
-			default:
-				terminate=2;
-				break;
 		}
-	}while(terminate ==2);
 	}while(terminate!=1);
 	clrscr();
 	background_color(0x00);
@@ -698,7 +682,6 @@ int saveBeforeClose()// return 0 for yes , 1 for no ,2 for cancel
 			button(x1+3+9*i,y2-1,btn[i],selected);
 				selected=0;
 		}
-	do{	
 		flushall();
 		key=getch();
 		switch(key)
@@ -728,9 +711,6 @@ int saveBeforeClose()// return 0 for yes , 1 for no ,2 for cancel
 					case pagedown:
 						pos++;
 						if(pos>2)pos=0;
-						break;
-					default:
-						terminate=2;
 						break;
 				}
 				break;
@@ -766,11 +746,7 @@ int saveBeforeClose()// return 0 for yes , 1 for no ,2 for cancel
 				display_all();
 				terminate=1;
 				break;
-			default:
-				terminate=2;
-				break;
 		}
-	}while(terminate ==2);
 	}while(terminate!=1);
 	clrscr();
 	background_color(0x00);
@@ -829,10 +805,8 @@ char * viewsearchbox(int index)
 				switch(ch)
 				{
 				// to left button "cancel"
-					case LEFT:
+				
 					case RIGHT:
-					do
-					{
 						button(x1+8,y2-2,"Search",0);
 						button(x1+18,y2-2,"CANCEL",1);
 						gotoxy(x1+19,y2-2);
@@ -845,10 +819,7 @@ char * viewsearchbox(int index)
 										{
 										case RIGHT:
 										case LEFT:
-											terminate=5;
-											break;
-										default:
-											terminate=6;
+											terminate=3;
 											break;
 										}
 								break;
@@ -858,23 +829,12 @@ char * viewsearchbox(int index)
 								case tab:
 									terminate=4;//back to text
 									break;
-								case esc:
-									terminate=1;
-									break;
-								default:
-									terminate=6;
-									break;
-
+								
 							}
-				  }while(terminate==6);
-						break;
-					default:
-						terminate=5;
-						break;
+						break;	
 				}
 			break;
 			case tab:
-				do{
 				button(x1+8,y2-2,"Search",0);
 				button(x1+18,y2-2,"CANCEL",1);
 				gotoxy(x1+19,y2-2);
@@ -887,10 +847,7 @@ char * viewsearchbox(int index)
 								{
 								case RIGHT:
 								case LEFT:
-									terminate=5;
-									break;
-								default:
-									terminate=6;
+									terminate=3;
 									break;
 								}
 							break;
@@ -900,14 +857,7 @@ char * viewsearchbox(int index)
 						case tab:
 							terminate=4;//back to text
 							break;
-						case esc:
-									terminate=1;
-									break;
-								default:
-									terminate=6;
-									break;
 					}
-					}while(terminate==6);
 				break;	
 			case ENTER:
 				temp=search(key,index+1);
@@ -922,15 +872,9 @@ char * viewsearchbox(int index)
 					}
 				terminate=1;
 				break;
-			case esc:
-				terminate=1;
-				break;
-			default:
-				terminate=5;
-				break;
-		}}
+		}
 		
-	 while(terminate==5);
+	}while(terminate==3);
 	}while(terminate==4);
 	
 	
@@ -965,7 +909,7 @@ char * viewsearchbox(int index)
 	  	do
 	  	{
 	  		temp_name=run_textbox(x,y,10,1);
-	  	}while(temp_name && temp_name[0] == '\0' || (is_spaces(temp_name)) || lastcharcomma(temp_name));
+	  	}while(temp_name && temp_name[0] == '\0' || (is_spaces(temp_name)));
 		//deleteMeess			ageBox(x,y,10,1,temp_name);
 		if(pressedEsc == 1)
 			{
@@ -979,7 +923,7 @@ char * viewsearchbox(int index)
 		do
 		{
 			temp_phone=run_textbox(x,y,11,1);
-		}while(temp_phone && temp_phone[0] == '\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 )  || lastcharcomma(temp_phone));
+		}while(temp_phone && temp_phone[0] == '\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 ) );
 		//deleteMeessageBox(x,y,11,1,temp_phone);
 		if(pressedEsc == 1)
 			{
@@ -1006,7 +950,7 @@ char * viewsearchbox(int index)
 		do
 	  	{
 	  		temp_name=run_textbox_with_initial(x,y,10,1,temp_name);
-	  	}while(temp_name && temp_name[0] == '\0' || (is_spaces(temp_name))  || lastcharcomma(temp_name));
+	  	}while(temp_name && temp_name[0] == '\0' || (is_spaces(temp_name)));
 		//deleteMeess			ageBox(x,y,10,1,temp_name);
 		if(pressedEsc == 1)
 			{
@@ -1020,7 +964,7 @@ char * viewsearchbox(int index)
 		do
 		{
 			temp_phone=run_textbox_with_initial(x,y,11,1,temp_phone);
-		}while(temp_phone && temp_phone[0] == '\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 )  || lastcharcomma(temp_phone));
+		}while(temp_phone && temp_phone[0] == '\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 ) );
 		//deleteMeessageBox(x,y,11,1,temp_phone);
 		if(pressedEsc == 1)
 			{
@@ -1056,9 +1000,7 @@ char * viewsearchbox(int index)
 				ch=getch();
 				switch(ch)
 				{
-					case LEFT:
 					case RIGHT:
-						do{
 						button(8,14,"DONE",0);
 						button(17,14,"CANCEL",1);
 						gotoxy(17,14);
@@ -1070,10 +1012,7 @@ char * viewsearchbox(int index)
 									switch(ch)
 										{
 										case LEFT:
-											terminate=5;
-											break;
-										default:
-											terminate=6;
+											terminate=3;
 											break;
 									}
 									break;
@@ -1083,22 +1022,14 @@ char * viewsearchbox(int index)
 								case tab:
 									terminate=2;
 									break;
-								case esc:
-									terminate=1;
-									break;
 								default:
-									terminate=6;
+									terminate=3;
 									break;
 							}
-						}while(terminate==6);
-						break;
-					default:
-						terminate=5;
 						break;	
 					}
 					break;
 			case tab:
-				do{
 				button(8,14,"DONE",0);
 				button(17,14,"CANCEL",1);
 				gotoxy(17,14);
@@ -1110,10 +1041,7 @@ char * viewsearchbox(int index)
 						switch(ch)
 						{
 							case LEFT:
-								terminate=5;
-								break;
-							default:
-								terminate=6;
+								terminate=3;
 								break;
 						}
 						break;
@@ -1123,28 +1051,18 @@ char * viewsearchbox(int index)
 					case tab:
 						terminate=2;
 						break;
-					case esc:
-						terminate=1;
-						break;
-					default:
-						terminate=6;
-						break;						
 				}
-				}while(terminate==6);
 				break;
 			case ENTER:
 				if(temp_name !="" || temp_name!=" " || temp_phone!="" || temp_phone!=" " || temp_address!="" ||temp_address!=" ")
 					create_add_node(temp_name,temp_phone,temp_address);
 				terminate=1;
 				break;
-			case esc:
-				terminate=1;
-				break;
 			default:
-				terminate=5;
+				terminate=3;
 				break;
 		}
-	}while(terminate==5);
+	}while(terminate==3);
 	flag++;
 }while(terminate==2);
 	   clrscr();
@@ -1159,56 +1077,45 @@ char * viewsearchbox(int index)
 int deleteBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp_address,int ii)
 {
 	char ch;
-	int terminate;
-	do
+	button(8,14,"DELETE",1);
+	button(17,14,"EDIT",0);
+	button(26,14,"NEXT",0);
+	gotoxy(9,14);
+	ch=getch();
+	switch(ch)
 	{
-		button(8,14,"DELETE",1);
-		button(17,14,"EDIT",0);
-		button(26,14,"NEXT",0);
-		gotoxy(9,14);
-		ch=getch();
-		switch(ch)
-		{
-			case tab:
-				return editBtn(temp,temp_name,temp_phone,temp_address,ii);
-				break;
-			case ENTER:
-				delete_node(temp->name);
-				return 1;
-				break;
-			case NULL:
-				ch=getch();
-				switch(ch)
-				{
-					case LEFT:
-						return nextBtn(temp,temp_name,temp_phone,temp_address,ii);
-						break;
-					case RIGHT:
-						return editBtn(temp,temp_name,temp_phone,temp_address,ii);
-						break;
-					case esc:
-						return 1;
-					default:
-						terminate =6;
-						break;
-				}
-				break;
-			case esc:
-				return 1;
-			default:
-				terminate= 6;
-				break;	
-		}
-	}while(terminate==6);
+		case tab:
+			return editBtn(temp,temp_name,temp_phone,temp_address,ii);
+			break;
+		case ENTER:
+			delete_node(temp->name);
+			return 1;
+			break;
+		case NULL:
+			ch=getch();
+			switch(ch)
+			{
+				case LEFT:
+					return nextBtn(temp,temp_name,temp_phone,temp_address,ii);
+					break;
+				case RIGHT:
+					return editBtn(temp,temp_name,temp_phone,temp_address,ii);
+					break;
+				default:
+					return 2;
+					break;
+			}
+			break;
+		default:
+			return 2;
+			break;	
+	}
 	return 2;
 }
 
 int editBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp_address,int ii)
 {
 	char ch;
-	int terminate;
-	do
-	{
 	button(8,14,"DELETE",0);
 	button(17,14,"EDIT",1);
 	button(26,14,"NEXT",0);
@@ -1234,30 +1141,22 @@ int editBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp_a
 				case RIGHT:
 					return nextBtn(temp,temp_name,temp_phone,temp_address,ii);
 					//break;
-				case esc:
-					return 1;
 				default:
-					terminate=6;
+					return 2;
 					break;
 			}
-			break;
 			//break;
-		case esc:
-					return 1;
-					default:
-						terminate= 6;
-						break;
+		default:
+			return 2;
+			break;
 	}
- 	}while(terminate==6);
 	return 2;
 }
 
 int nextBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp_address,int ii)
 {
 	char ch;
-	int terminate;
 	struct phonebook * temp2;
-	do{
 	button(8,14,"DELETE",0);
 	button(17,14,"EDIT",0);
 	button(26,14,"NEXT",1);
@@ -1297,20 +1196,15 @@ int nextBtn(struct phonebook* temp,char* temp_name,char* temp_phone,char* temp_a
 				case RIGHT:
 					return deleteBtn(temp,temp_name,temp_phone,temp_address,ii);
 					//break;
-					case esc:
-						return 1;
-					default:
-						terminate= 6;
-						break;
+				default:
+					return 2;
+					break;
 			}
+			//break;
+		default:
+			return 2;
 			break;
-					case esc:
-						return 1;
-					default:
-						terminate= 6;
-						break;
 	}
-}while(terminate==6);
 	return 2;
 }
 
@@ -1348,7 +1242,7 @@ void viewsearchresult(struct phonebook *temp)
 			do
 			{	
 				temp_name=run_textbox_with_initial(x,y,10,1,temp->name);
-			}while(temp_name&&temp_name[0]=='\0' || (is_spaces(temp_name))  || lastcharcomma(temp_name));
+			}while(temp_name&&temp_name[0]=='\0' || (is_spaces(temp_name)));
 			if(pressedEsc == 1)
 			{
 				terminate=1;
@@ -1359,7 +1253,7 @@ void viewsearchresult(struct phonebook *temp)
 			do
 			{	
 				temp_phone=run_textbox_with_initial(x,y,11,1,temp->phone);
-			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 )  || lastcharcomma(temp_phone));
+			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 ) );
 			if(pressedEsc == 1)
 			{
 				terminate=1;
@@ -1385,7 +1279,7 @@ void viewsearchresult(struct phonebook *temp)
 			do
 			{	
 				temp_name=run_textbox_with_initial(x,y,10,1,temp_name);
-			}while(temp_name&&temp_name[0]=='\0' || (is_spaces(temp_name))  || lastcharcomma(temp_name));
+			}while(temp_name&&temp_name[0]=='\0' || (is_spaces(temp_name)));
 			if(pressedEsc == 1)
 			{
 				terminate=1;
@@ -1396,7 +1290,7 @@ void viewsearchresult(struct phonebook *temp)
 			do
 			{	
 				temp_phone=run_textbox_with_initial(x,y,11,1,temp_phone);
-			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 )  || lastcharcomma(temp_phone));
+			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 ) );
 			if(pressedEsc == 1)
 			{
 				terminate=1;
@@ -1456,7 +1350,7 @@ void showeditbox(char * name,char *tele ,char *address)
 			do
 			{	
 				temp_name=run_textbox_with_initial(x,y,10,1,temp->name);
-			}while(temp_name&&temp_name[0]=='\0' || (is_spaces(temp_name))  || lastcharcomma(temp_name));
+			}while(temp_name&&temp_name[0]=='\0' || (is_spaces(temp_name)));
 			if(pressedEsc == 1)
 			{
 				terminate=2;
@@ -1467,7 +1361,7 @@ void showeditbox(char * name,char *tele ,char *address)
 			do
 			{	
 				temp_phone=run_textbox_with_initial(x,y,11,1,temp->phone);
-			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 )  || lastcharcomma(temp_phone));
+			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 ) );
 			if(pressedEsc == 1)
 			{
 				terminate=2;
@@ -1493,9 +1387,9 @@ void showeditbox(char * name,char *tele ,char *address)
 			do
 			{	
 				temp_name=run_textbox_with_initial(x,y,10,1,temp_name);
-			}while(temp_name&&temp_name[0]=='\0' || (is_spaces(temp_name)) || lastcharcomma(temp_name));
+			}while(temp_name&&temp_name[0]=='\0' || (is_spaces(temp_name)));
 			if(pressedEsc == 1)
-			{ 
+			{
 				terminate=2;
 				break;
 			}
@@ -1504,7 +1398,7 @@ void showeditbox(char * name,char *tele ,char *address)
 			do
 			{	
 				temp_phone=run_textbox_with_initial(x,y,11,1,temp_phone);
-			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 ) || lastcharcomma(temp_phone));
+			}while(temp_phone && temp_phone[0]=='\0' || (is_spaces(temp_phone)) || (!(is_phone(temp_phone))) && (strcmp(temp_phone,"STOP")!=0 ) );
 			if(pressedEsc == 1)
 			{
 				terminate=2;
@@ -1535,9 +1429,7 @@ void showeditbox(char * name,char *tele ,char *address)
 					ch=getch();
 					switch(ch)
 					{
-						case LEFT:
 						case RIGHT:
-							do{
 							button(8,14,"DELETE",0);
 							button(26,14,"DONE",1);
 							gotoxy(26,14);
@@ -1548,12 +1440,8 @@ void showeditbox(char * name,char *tele ,char *address)
 										ch=getch();
 										switch(ch)
 											{
-											case RIGHT:
 											case LEFT:
-												terminate=5;
-												break;
-											default:
-												terminate=6;
+												terminate=3;
 												break;
 										}
 										break;
@@ -1568,25 +1456,17 @@ void showeditbox(char * name,char *tele ,char *address)
 									case tab:
 										terminate=2;
 										break;
-									case esc:
-										terminate=1;
-										break;
 									default:
-										terminate=6;
+										terminate=3;
 										break;
 								}
-							}while(terminate==6);
 							break;	
-						case esc:
-							terminate=1;
-								break;
 						default:
-							terminate=5;
+							terminate=3;
 							break;
 						}
 						break;
 				case tab:
-					do{
 					button(8,14,"DELETE",0);
 					button(26,14,"DONE",1);
 					gotoxy(26,14);
@@ -1597,12 +1477,8 @@ void showeditbox(char * name,char *tele ,char *address)
 							ch=getch();
 							switch(ch)
 							{
-								case RIGHT:
 								case LEFT:
-									terminate=5;
-									break;
-								default:
-									terminate=6;
+									terminate=3;
 									break;
 							}
 							break;
@@ -1617,27 +1493,20 @@ void showeditbox(char * name,char *tele ,char *address)
 						case tab:
 							terminate=2;
 							break;
-						case esc:
-							terminate=1;
-							break;
 						default:
-							terminate=6;
+							terminate=3;
 							break;
 					}
-				}while(terminate==6);
 					break;
 				case ENTER:
 					delete_node(temp->name);
 					terminate=1;
 					break;
-				case esc:
-					terminate=1;
-					break;
 				default:
-					terminate=5;
+					terminate=3;
 					break;
 			}
-		}while(terminate==5);
+		}while(terminate==3);
 		flag++;
 	}while(terminate==2);
 	clrscr();
@@ -1712,7 +1581,6 @@ void openfile(/*char* files,int size*/)
 			cprintf("%s",files[i]);
 			textattr(normal);
 		}
-		do{
 		flushall();
 		key=getch();
 		switch(key)
@@ -1742,9 +1610,6 @@ void openfile(/*char* files,int size*/)
 					case pagedown:
 						pos++;
 						if(pos>size-1)pos=0;
-						break;
-					default:
-						terminate=6;
 						break;
 				}
 				break;
@@ -1776,12 +1641,8 @@ void openfile(/*char* files,int size*/)
 			case esc:
 				terminate=1;
 				break;
-			default:
-				terminate=6;
-				break;
 
 		}
-	}while(terminate==6);
 
 	}while(terminate!=1);
 

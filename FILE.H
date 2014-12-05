@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include<conio.h>
+//#include<conio.h>
 #include"LINKED.h"
 
 char fileNames[6][20];
@@ -113,15 +113,20 @@ void read_file_name(void)
 {
 	FILE *fp;
 	char * token;
-	char tempstr [150];
+	char tempstr [20];
+
+	index=0;
+
+
 	fp = fopen("filename.txt","r");
-	fscanf(fp,"%s",tempstr);
-	token = strtok(tempstr,",");
-	while(token != NULL)
+	
+	
+	while(!feof(fp))
 	{
-		strcpy(fileNames[index],token);
-		
-		index++;
+		fscanf(fp,"%s",tempstr);
 		token = strtok(tempstr,",");
+		strcpy(fileNames[index],token);
+		index++;
+		//token = strtok(tempstr,",");
 	}
 }
